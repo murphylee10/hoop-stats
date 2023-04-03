@@ -8,5 +8,13 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 
+# DB routes (methods) go here
+
+
+# Web routes go here
+@app.route('/')
+def home():
+    return render_template("home-page.html")
+
 
 app.run(debug=True, host='0.0.0.0', port=81)
