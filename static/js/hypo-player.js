@@ -1,0 +1,1 @@
+createDropdown(document.querySelector("#season"));

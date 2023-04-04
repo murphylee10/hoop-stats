@@ -3,5 +3,43 @@
 {% block title %}SwishStats{% endblock %}
 
 {% block content %}
-<!-- HTML GOES HERE -->
+    <div id="content">
+
+        <form action="" method="POST" id="hypo-form">
+
+            <h2>Build Your Player</h2>
+            <p>
+                Welcome to the build you player page! 
+                In this page, you can build a hypothetical
+                player based on their stats as a rookie,
+                and which season they debuted as a rookie.
+            </p>
+            
+            <h2>Stats</h2>
+            <h3>Season</h3>
+            <select id="season">
+            </select>
+            <h3>Games Played</h3>
+            <input type="text" id="g">
+            <h3>Points</h3>
+            <input type="text" id="pts">
+            <h3>Rebounds</h3>
+            <input type="text" id="trb">
+            <h3>Assists</h3>
+            <input type="text" id="ast">
+            <h3>Field Goal Percentage</h3>
+            <input type="text" id="fg">
+            <h3>Three Point Percentage</h3>
+            <input type="text" id="fg3">
+            <h3>Free Throw Percentage</h3>
+            <input type="text" id="ft"><br>
+
+            <input type="submit" value="Build Player!" id="build">
+
+        </form>
+
+        <script src="../static/js/season-dropdown.js"></script>
+        <script src="../static/js/hypo-player.js"></script>
+
+    </div>
 {% endblock %}
