@@ -3,5 +3,24 @@
 {% block title %}SwishStats{% endblock %}
 
 {% block content %}
-<!-- HTML GOES HERE -->
+
+    <div id="content">
+
+        <h2>Player 1</h2>
+        <input type="text" id="p1">
+        
+        <h2>Player 2</h2>
+        <input type="text" id="p2">
+
+        <h2>Compare By</h2>
+        <select id="compare-by">
+            <option value="career">Career</option>
+            <option value="rookie">Rookie</option>
+            <option value="custom">Custom</option>
+        </select>
+
+        <script src="../static/js/duel.js"></script>
+    
+    </div>
+
 {% endblock %}
