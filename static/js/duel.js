@@ -1,8 +1,9 @@
-let compareBy = document.querySelector("#compare-by");
+let compareBy = document.querySelector("#year");
 compareBy.addEventListener("change", changeOptions);
 function changeOptions() {
     if (compareBy.value === "custom") {
-        let content = document.querySelector("#content");
+        let query = document.querySelector("#QUERY");
+        let duelButton = document.querySelector("#duel");
         let extra = document.createElement("div");
         extra.setAttribute("id", "extra");
         let year1 = document.createElement("input");
@@ -15,7 +16,7 @@ function changeOptions() {
         year2.setAttribute("placeholder", "Year (Player 2)");
         extra.append(year1);
         extra.append(year2);
-        content.append(extra);
+        query.insertBefore(extra, duelButton);
     } else {
         let extra = document.querySelector("#extra");
         if (extra !== null) {

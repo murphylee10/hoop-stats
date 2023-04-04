@@ -6,18 +6,46 @@
 
     <div id="content">
 
-        <h2>Player 1</h2>
-        <input type="text" id="p1">
-        
-        <h2>Player 2</h2>
-        <input type="text" id="p2">
+        <form action="" method="POST" id="QUERY">
 
-        <h2>Compare By</h2>
-        <select id="compare-by">
-            <option value="career">Career</option>
-            <option value="rookie">Rookie</option>
-            <option value="custom">Custom</option>
-        </select>
+            <h2>Player 1</h2>
+            <input type="text" id="p1">
+            
+            <h2>Player 2</h2>
+            <input type="text" id="p2">
+
+            <h2>Stats</h2>
+            <input type="checkbox" id="g">
+            <label for="g">Games Played</label><br>
+            <input type="checkbox" id="pts">
+            <label for="pts">Points</label><br>
+            <input type="checkbox" id="trb">
+            <label for="trb">Rebounds</label><br>
+            <input type="checkbox" id="ast">
+            <label for="ast">Assists</label><br>
+            <input type="checkbox" id="fg">
+            <label for="fg">Field Goal Percentage</label><br>
+            <input type="checkbox" id="fg3">
+            <label for="fg3">Three Point Percentage</label><br>
+            <input type="checkbox" id="ft">
+            <label for="ft">Free Throw Percentage</label><br>
+            <input type="checkbox" id="efg">
+            <label for="efg">Effective Field Goal Percentage</label><br>
+            <input type="checkbox" id="per">
+            <label for="per">Player Efficiency Rating</label><br>
+            <input type="checkbox" id="ws">
+            <label for="ws">Winshares</label><br>
+
+            <h2>Year</h2>
+            <select id="year">
+                <option value="career">Career</option>
+                <option value="rookie">Rookie</option>
+                <option value="custom">Custom</option>
+            </select> <br>
+
+            <input type="submit" value="Duel!" id="duel">
+
+        </form>
 
         <script src="../static/js/duel.js"></script>
     
