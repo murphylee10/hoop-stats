@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
             integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    {% block style %}{% endblock %}
 </head>
 <body>
 
@@ -187,7 +188,7 @@
                     <!-- Grid column -->
                     <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
                         <!-- Links -->
-                        <h6 class="text-uppercase fw-bold mb-4">Group Members</h6>
+                        <h6 class="text-uppercase fw-bold mb-4">Project Contributors</h6>
                         <p><i class="fas fa-home me-3"></i> Murphy Lee</p>
                         <p>
                             <i class="fas fa-envelope me-3"></i>
