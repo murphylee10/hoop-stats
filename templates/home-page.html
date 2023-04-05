@@ -1,5 +1,11 @@
 {% extends 'base.html' %} {% block title %}HoopStats | Welcome{% endblock %} {%
 block style %}
+<head>
+  <script
+    src="https://kit.fontawesome.com/dd1637e640.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
 <!--font awesome cdn link-->
 <link
   rel="stylesheet"
@@ -39,13 +45,16 @@ block style %}
           <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
         </li>
         <li>
-          <a href="profile.html"><i class="fa fa-fw fa-user"></i>profile</a>
+          <a href="profile.html"
+            ><i class="fa-solid fa-circle-user"></i> profile</a
+          >
         </li>
         <li>
-          <a href="query.html">Query</a><i class="fa fa-fw fa-question"></i>
+          <a href="query.html">Query</a
+          ><i class="fa fa-fw fa-question" id="question"></i>
         </li>
         <li>
-          <a href="duel.html">Duel</a><i class="fa fa-fw fa-question"></i>
+          <a href="duel.html"><i class="fa-solid fa-shield-halved"></i> Duel</a>
         </li>
       </ul>
     </div>
@@ -113,6 +122,5 @@ block style %}
 </footer>
 
 <script src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/js/script.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 {% endblock %}
