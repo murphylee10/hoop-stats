@@ -1,94 +1,118 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block title %}HoopStats | Welcome{% endblock %} {%
+block style %}
+<!--font awesome cdn link-->
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+/>
+<!-- Load font awesome icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/css/home-page.css"
+/>
+{% endblock %} {% block content %}
+<header>
+  <section id="navbar">
+    <div class="navbar1">
+      <h1>
+        <span class="highlight">Hoop</span>
+        <span class="highlight1">Stats</span>
+      </h1>
+    </div>
+    <div class="nav-bar">
+      <ul>
+        <li>
+          <a class="current" href="index.html"
+            ><i class="fa fa-fw fa-home"></i> Home</a
+          >
+        </li>
+        <li>
+          <a href="register.html"
+            ><i class="fa fa-fw fa-envelope"></i>Register</a
+          >
+        </li>
+        <li>
+          <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
+        </li>
+        <li>
+          <a href="profile.html"><i class="fa fa-fw fa-user"></i>profile</a>
+        </li>
+        <li>
+          <a href="query.html">Query</a><i class="fa fa-fw fa-question"></i>
+        </li>
+        <li>
+          <a href="duel.html">Duel</a><i class="fa fa-fw fa-question"></i>
+        </li>
+      </ul>
+    </div>
+  </section>
+</header>
+<!-- Navigtion Bar-->
 
-{% block title %}HoopStats | Welcome{% endblock %}
-{% block style %}
-    <!--font awesome cdn link-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-    <!-- Load font awesome icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-page.css') }}" />
+<div class="container">
+  <h1>
+    <center>HoopStats | Welcome</center>
+  </h1>
+</div>
+
+<!--slideshow-->
+<div class="slideshow-container">
+  <div class="mySlides fade">
+    <div class="numbertext">1 / 3</div>
+    <img
+      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      style="width: 100%"
+    />
+    <div class="text">Player 1 info.</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">2 / 3</div>
+    <img
+      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      style="width: 100%"
+    />
+    <div class="text">player 2 info.</div>
+  </div>
+
+  <div class="mySlides fade">
+    <div class="numbertext">3 / 3</div>
+    <img
+      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      style="width: 100%"
+    />
+    <div class="text">player 3 info.</div>
+  </div>
+
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br />
+
+<div style="text-align: center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+<!--slideshow-->
+
+<!-- footer with names of all team members -->
+<footer class="footer">
+  <h1 class="footer-title">Project Contributors:</h1>
+  <br />
+  <ul>
+    <li>Andrew Tam</li>
+    <li>Zuhair Khan</li>
+    <li>Murphy Lee</li>
+  </ul>
+  <p>OkayReads, Copyright &copy; 2023</p>
+</footer>
+
+<script src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/js/script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 {% endblock %}
-
-{% block content %}
-    <!-- <section id="navbar">
-        <div class="navbar1">
-            <h1>
-                <span class="highlight">Hoop</span>
-                <span class="highlight1">Stats</span>
-            </h1>
-        </div>
-        <div class="nav-bar">
-            <ul>
-                <li>
-                    <a class="current" href="index.html"><i class="fa fa-fw fa-home"></i> Home</a>
-                </li>
-                <li>
-                    <a href="register.html"><i class="fa fa-fw fa-envelope"></i>Register</a>
-                </li>
-                <li>
-                    <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
-                </li>
-                <li><a href="profile.html">Profile</a></li>
-                <li>
-                    <a href="query.html">Query</a><i class="fa fa-fw fa-question"></i>
-                </li>
-            </ul>
-        </div>
-    </section> -->
-    </header>
-    <!-- Navigtion Bar-->
-    
-    <div class="container">
-        <h1>
-            <center>HoopStats | Welcome</center>
-        </h1>
-    </div>
-    
-    <!--slideshow-->
-    <div class="slideshow-container">
-        <div class="mySlides fade">
-            <div class="numbertext">1 / 3</div>
-            <img src="{{ url_for('static', filename='images/img1.png') }}" style="width: 100%" />
-            <div class="text">Player 1 info.</div>
-        </div>
-    
-        <div class="mySlides fade">
-            <div class="numbertext">2 / 3</div>
-            <img src="{{ url_for('static', filename='images/img1.png') }}" style="width: 100%" />
-            <div class="text">player 2 info.</div>
-        </div>
-    
-        <div class="mySlides fade">
-            <div class="numbertext">3 / 3</div>
-            <img src="{{ url_for('static', filename='images/img1.png') }}" style="width: 100%" />
-            <div class="text">player 3 info.</div>
-        </div>
-    
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-    </div>
-    <br />
-    
-    <div style="text-align: center">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-    </div>
-    <!--slideshow-->
-    
-    <!-- footer with names of all team members -->
-    <!-- <footer class="footer">
-        <h1 class="footer-title">Project Contributors:</h1>
-        <ul>
-            <li>Andrew Tam</li>
-            <li>Zuhair Khan</li>
-            <li>Murphy Lee</li>
-        </ul>
-        <p>OkayReads, Copyright &copy; 2023</p>
-    </footer> -->
-
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-{% endblock %}
-

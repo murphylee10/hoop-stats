@@ -84,6 +84,8 @@ header ul li:hover:not(.active) {
   background: #d80b15;
 }
 
+/* SLIDESHOW STYLYING */
+
 .mySlides {
   overflow: hidden;
   display: none;
