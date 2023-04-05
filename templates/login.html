@@ -1,7 +1,97 @@
-{% extends 'base.html' %}
-
-{% block title %}SwishStats{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}SwishStats{% endblock %} {% block
+content %}
 <!-- HTML GOES HERE -->
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/login.css') }}"
+/>
+<!--
+<section id="navbar">
+  <div class="navbar1">
+    <h1>
+      <span class="highlight">Hoop</span>
+      <span class="highlight1">Stats</span>
+    </h1>
+  </div>
+  <div class="nav-bar">
+    <ul>
+      <li>
+        <a class="current" href="index.html"
+          ><i class="fa fa-fw fa-home"></i> Home</a
+        >
+      </li>
+      <li>
+        <a href="register.html"><i class="fa fa-fw fa-envelope"></i>Register</a>
+      </li>
+      <li>
+        <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
+      </li>
+      <li><a href="profile.html">Profile</a></li>
+      <li>
+        <a href="query.html">Query</a><i class="fa fa-fw fa-question"></i>
+      </li>
+    </ul>
+  </div>
+</section>
+-->
+
+<!--LOGIN FORM-->
+
+<section id="contact">
+  <div class="wrapper">
+    <div class="content">
+      <h1>LOGIN FORM</h1>
+      <p>
+        Welcome back. Login and keep up to date with stats of your favorite
+        players and teams.
+      </p>
+    </div>
+
+    <div class="form">
+      <div class="top-form">
+        <div class="innerform">
+          <div class="label">name</div>
+          <input type="text3" placeholder="John" />
+        </div>
+
+        <div class="innerform">
+          <div class="label">email</div>
+          <input type="text3" placeholder="Example@gmail.com" />
+        </div>
+
+        <div class="innerform">
+          <div class="label">phone</div>
+          <input type="text3" placeholder="1234567890" />
+        </div>
+      </div>
+
+      <div class="middle-form">
+        <div class="innerform">
+          <div class="label">subject</div>
+          <input type="text3" placeholder="subject" />
+        </div>
+      </div>
+
+      <div class="bottom-form">
+        <div class="innerform">
+          <div class="label">your message</div>
+          <textarea placeholder="your message"></textarea>
+        </div>
+      </div>
+
+      <div class="btn">send form</div>
+    </div>
+  </div>
+</section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $(".btn").click(function () {
+      $("input[type='text3'], textarea").val("");
+    });
+  });
+</script>
+
 {% endblock %}

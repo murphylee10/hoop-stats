@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css?family=Kavivanar&display=swap");
+
+#contact .wrapper p {
+  font-family: "Kavivanar", cursive;
+}
+
+#contact .form {
+  font-family: "Kavivanar", cursive;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 880px;
+  margin: 100px auto 0;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #4ca1af;
+}
+
+.content {
+  text-align: center;
+}
+
+.content h1 {
+  letter-spacing: 1px;
+}
+
+.form {
+  width: 100%;
+  margin: 25px 0;
+}
+
+.top-form,
+.middle-form,
+.bottom-form {
+  width: 100%;
+  min-height: 65px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.form input[type="text3"],
+.form textarea {
+  padding: 15px 5px;
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+.form input:focus,
+.form textarea:focus {
+  border-color: #4ca1af;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.125),
+    0 0 8px rgba(76, 161, 175, 0.5);
+}
+
+.form .label {
+  margin-bottom: 5px;
+  text-transform: capitalize;
+}
+
+.top-form .innerform {
+  width: 29.9%;
+  float: left;
+  margin-right: 5%;
+}
+.top-form .innerform:last-child {
+  margin-right: 0;
+}
+
+.middle-form {
+  clear: both;
+}
+
+.bottom-form textarea {
+  height: 120px;
+}
+
+.btn {
+  background: #ff9933;
+  width: 200px;
+  padding: 10px 0;
+  border-radius: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 5px;
+  cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+  font-family: "Kavivanar", cursive;
+  text-transform: capitalize;
+}
+
+::-moz-input-placeholder {
+  font-family: "Kavivanar", cursive;
+  text-transform: capitalize;
+}
+
+::-ms-input-placeholder {
+  font-family: "Kavivanar", cursive;
+  text-transform: capitalize;
+}
