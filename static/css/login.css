@@ -1,20 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Kavivanar&display=swap");
 
-#contact .wrapper p {
+#login .wrapper p {
   font-family: "Kavivanar", cursive;
+  text-align: center;
+  align-items: center;
 }
 
-#contact .form {
+#login .form {
   font-family: "Kavivanar", cursive;
 }
 
 .wrapper {
   width: 100%;
-  max-width: 880px;
-  margin: 100px auto 0;
+  max-width: 50%;
+  margin: 4em auto;
   padding: 20px;
   box-sizing: border-box;
-  background: #4ca1af;
+  background: #5698be;
 }
 
 .content {
@@ -27,28 +29,21 @@
 
 .form {
   width: 100%;
-  margin: 25px 0;
+  margin: 25px 10px;
 }
 
-.top-form,
-.middle-form,
-.bottom-form {
-  width: 100%;
-  min-height: 65px;
-  margin: 10px 0;
-  overflow: hidden;
-}
-
-.form input[type="text3"],
+.form input[type="text"],
 .form textarea {
   padding: 15px 5px;
   box-sizing: border-box;
-  width: 100%;
+  width: 70%;
   border: 2px solid #fff;
   border-radius: 2px;
   outline: none;
   transition: all 0.2s ease;
+  margin: auto;
 }
+
 .form input:focus,
 .form textarea:focus {
   border-color: #4ca1af;
@@ -61,33 +56,34 @@
   text-transform: capitalize;
 }
 
-.top-form .innerform {
-  width: 29.9%;
-  float: left;
-  margin-right: 5%;
-}
-.top-form .innerform:last-child {
-  margin-right: 0;
-}
-
-.middle-form {
-  clear: both;
-}
-
-.bottom-form textarea {
-  height: 120px;
+.innerform {
+  margin-top: auto;
+  padding-bottom: 1.3em;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn {
   background: #ff9933;
-  width: 200px;
-  padding: 10px 0;
+  margin: auto;
+  padding: 0.8em;
+  width: 20%;
+  display: inline-block;
   border-radius: 2px;
   text-align: center;
   text-transform: uppercase;
   color: #fff;
   letter-spacing: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register-link {
+  margin-top: 1em;
 }
 
 ::-webkit-input-placeholder {

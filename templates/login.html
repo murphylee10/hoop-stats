@@ -1,43 +1,64 @@
 {% extends 'base.html' %} {% block title %}SwishStats{% endblock %} {% block
 content %}
-<!-- HTML GOES HERE -->
+<head>
+  <script
+    src="https://kit.fontawesome.com/dd1637e640.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='css/login.css') }}"
+  href="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/css/login.css"
 />
-<!--
-<section id="navbar">
-  <div class="navbar1">
-    <h1>
-      <span class="highlight">Hoop</span>
-      <span class="highlight1">Stats</span>
-    </h1>
-  </div>
-  <div class="nav-bar">
-    <ul>
-      <li>
-        <a class="current" href="index.html"
-          ><i class="fa fa-fw fa-home"></i> Home</a
-        >
-      </li>
-      <li>
-        <a href="register.html"><i class="fa fa-fw fa-envelope"></i>Register</a>
-      </li>
-      <li>
-        <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
-      </li>
-      <li><a href="profile.html">Profile</a></li>
-      <li>
-        <a href="query.html">Query</a><i class="fa fa-fw fa-question"></i>
-      </li>
-    </ul>
-  </div>
-</section>
--->
+<link
+  rel="stylesheet"
+  href="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/css/home-page.css"
+/>
+{% endblock %} {% block content %}
+<header>
+  <section id="navbar">
+    <div class="navbar1">
+      <h1>
+        <span class="highlight">Hoop</span>
+        <span class="highlight1">Stats</span>
+      </h1>
+    </div>
+    <div class="nav-bar">
+      <ul>
+        <li>
+          <a class="current" href="index.html"
+            ><i class="fa fa-fw fa-home"></i> Home</a
+          >
+        </li>
+        <li>
+          <a href="register.html"
+            ><i class="fa fa-fw fa-envelope"></i>Register</a
+          >
+        </li>
+        <li>
+          <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
+        </li>
+        <li>
+          <a href="profile.html"
+            ><i class="fa-solid fa-circle-user"></i> profile</a
+          >
+        </li>
+        <li>
+          <a href="query.html">Query</a
+          ><i class="fa fa-fw fa-question" id="question"></i>
+        </li>
+        <li>
+          <a href="duel.html"><i class="fa-solid fa-shield-halved"></i> Duel</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+</header>
+<!-- Navigtion Bar-->
 
 <!--LOGIN FORM-->
 
-<section id="contact">
+<section id="login">
   <div class="wrapper">
     <div class="content">
       <h1>LOGIN FORM</h1>
@@ -50,36 +71,17 @@ content %}
     <div class="form">
       <div class="top-form">
         <div class="innerform">
-          <div class="label">name</div>
-          <input type="text3" placeholder="John" />
+          <div class="label">username:</div>
+          <input type="text" placeholder="John123" />
         </div>
 
         <div class="innerform">
-          <div class="label">email</div>
-          <input type="text3" placeholder="Example@gmail.com" />
+          <div class="label">password:</div>
+          <input type="text" placeholder="********" />
         </div>
 
-        <div class="innerform">
-          <div class="label">phone</div>
-          <input type="text3" placeholder="1234567890" />
-        </div>
-      </div>
-
-      <div class="middle-form">
-        <div class="innerform">
-          <div class="label">subject</div>
-          <input type="text3" placeholder="subject" />
-        </div>
-      </div>
-
-      <div class="bottom-form">
-        <div class="innerform">
-          <div class="label">your message</div>
-          <textarea placeholder="your message"></textarea>
-        </div>
-      </div>
-
-      <div class="btn">send form</div>
+      <div class="btn">submit</div>
+      <p class="register-link">Haven't made an account yet... register <a href="register.html"> Here</a></p>
     </div>
   </div>
 </section>
@@ -94,4 +96,15 @@ content %}
   });
 </script>
 
+<!-- footer with names of all team members -->
+<footer class="footer">
+  <h1 class="footer-title">Project Contributors:</h1>
+  <br />
+  <ul>
+    <li>Andrew Tam</li>
+    <li>Zuhair Khan</li>
+    <li>Murphy Lee</li>
+  </ul>
+  <p>OkayReads, Copyright &copy; 2023</p>
+</footer>
 {% endblock %}
