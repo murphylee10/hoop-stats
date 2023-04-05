@@ -4,4 +4,11 @@
 
 {% block content %}
 <!-- HTML GOES HERE -->
+    <form action="/register" method="POST">
+        <input type="text" name="username" placeholder="Username">
+        <input type="text" name="full-name" placeholder="Full Name">
+        <input type="text" name="email" placeholder="Email">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Submit">
+    </form>
 {% endblock %}

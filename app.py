@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 import pandas as pd
 import requests
 from flask_bcrypt import Bcrypt
@@ -117,9 +117,24 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template("register.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        full_name = request.form['full-name']
+        email = request.form['email']
+        password = request.form['password']
+        password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
+        try:
+            add_user(username, full_name, email, password_hash)
+            flash("User successfully added")
+            return redirect(url_for('login'))
+        except exc.IntegrityError:
+            flash("Username already exists")
+            return render_template('register.html')
+
+    else:
+        return render_template("register.html")
 
 
 @app.route('/query')
