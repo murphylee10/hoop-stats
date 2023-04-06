@@ -10,15 +10,45 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
             integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home-page.css') }}">
     {% block style %}{% endblock %}
 </head>
 <body>
+    <header>
+        <section id="navbar">
+            <div class="navbar1">
+                <h1>
+                    <span class="highlight">Hoop</span>
+                    <span class="highlight1">Stats</span>
+                </h1>
+            </div>
+            <div class="nav-bar">
+                <ul>
+                    <li>
+                        <a class="current" href="home-page.html"><i class="fa fa-fw fa-home"></i> Home</a>
+                    </li>
+                    <li>
+                        <a href="/register"><i class="fa fa-fw fa-envelope"></i>Register</a>
+                    </li>
+                    <li>
+                        <a href="/login"><i class="fa fa-fw fa-user"></i>login</a>
+                    </li>
+                    <li>
+                        <a href="/profile"><i class="fa-solid fa-circle-user"></i> profile</a>
+                    </li>
+                    <li>
+                        <a href="/query">Query</a><i class="fa fa-fw fa-question" id="question"></i>
+                    </li>
+                    <li>
+                        <a href="/duel"><i class="fa-solid fa-shield-halved"></i> Duel</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </header>
 
-    <nav class="navbar navbar-expand-lg navbar-red navbar-light bg-light">
+    <!-- <nav class="navbar navbar-expand-lg navbar-red navbar-light bg-light">
         <div class="container-fluid d-flex justify-content-between">
-            <!-- <div class="mx-auto d-block">
-                <img src="{{ url_for('static', filename='images/Logo1.png') }}" class="logo" alt="Your Image">
-            </div> -->
 
             <img src="{{ url_for('static', filename='images/Logo1.png') }}" class="logo" alt="Your Image">
 
@@ -37,7 +67,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
     <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid d-flex justify-content-between">
             <div class="mx-auto d-block">
