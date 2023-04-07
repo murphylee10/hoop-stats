@@ -63,7 +63,7 @@ block style %}
   <div class="mySlides fade">
     <div class="numbertext">1 / 3</div>
     <img
-      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      src="{{ url_for('static', filename='images/img1.png') }}"
       style="width: 100%"
     />
     <div class="text">Player 1 info.</div>
@@ -72,7 +72,7 @@ block style %}
   <div class="mySlides fade">
     <div class="numbertext">2 / 3</div>
     <img
-      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      src="{{ url_for('static', filename='images/img1.png') }}"
       style="width: 100%"
     />
     <div class="text">player 2 info.</div>
@@ -81,7 +81,7 @@ block style %}
   <div class="mySlides fade">
     <div class="numbertext">3 / 3</div>
     <img
-      src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/images/img1.png"
+      src="{{ url_for('static', filename='images/img1.png') }}"
       style="width: 100%"
     />
     <div class="text">player 3 info.</div>
@@ -111,6 +111,6 @@ block style %}
   <p>OkayReads, Copyright &copy; 2023</p>
 </footer>
 
-<script src="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/js/slideshow.js"></script>
+<script src="{{ url_for('static', filename='js/slideshow.js') }}"></script>
 
 {% endblock %}
