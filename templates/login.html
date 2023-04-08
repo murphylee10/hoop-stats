@@ -8,53 +8,10 @@ style %}
 </head>
 <link
   rel="stylesheet"
-  href="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/css/login.css"
-/>
-<link
-  rel="stylesheet"
-  href="/Users/Zuhair/Documents/Second semester/CSCb20/instant-stats-b20/static/css/home-page.css"
+  href="{{ url_for('static', filename='css/login.css') }}"
 />
 {% endblock %} {% block content %}
-<header>
-  <section id="navbar">
-    <div class="navbar1">
-      <h1>
-        <span class="highlight">Hoop</span>
-        <span class="highlight1">Stats</span>
-      </h1>
-    </div>
-    <div class="nav-bar">
-      <ul>
-        <li>
-          <a class="current" href="index.html"
-            ><i class="fa fa-fw fa-home"></i> Home</a
-          >
-        </li>
-        <li>
-          <a href="register.html"
-            ><i class="fa fa-fw fa-envelope"></i>Register</a
-          >
-        </li>
-        <li>
-          <a href="login.html"><i class="fa fa-fw fa-user"></i>login</a>
-        </li>
-        <li>
-          <a href="profile.html"
-            ><i class="fa-solid fa-circle-user"></i> profile</a
-          >
-        </li>
-        <li>
-          <a href="query.html">Query</a
-          ><i class="fa fa-fw fa-question" id="question"></i>
-        </li>
-        <li>
-          <a href="duel.html"><i class="fa-solid fa-shield-halved"></i> Duel</a>
-        </li>
-      </ul>
-    </div>
-  </section>
-</header>
-<!-- Navigtion Bar-->
+
 
 <!--LOGIN FORM-->
 
