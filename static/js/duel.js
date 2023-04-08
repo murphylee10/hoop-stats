@@ -5,12 +5,9 @@ let duelButton = document.querySelector("#duel");
 duelButton.addEventListener("click", displayDuel);
 
 function changeOptions() {
-
   if (compareBy.value === "custom") {
-    
     let input = document.querySelector("#input");
     let seasons = document.createElement("div");
-    
     seasons.setAttribute("id", "seasons");
     let season1 = document.createElement("select");
     season1.setAttribute("name", "season1");
@@ -20,27 +17,21 @@ function changeOptions() {
     season2.setAttribute("name", "season2");
     season2.setAttribute("id", "season2");
     createDropdown(season2);
-    
     let head1 = document.createElement("h3");
     head1.append("Season (Player 1)");
     let head2 = document.createElement("h3");
     head2.append("Season (Player 2)");
-
     seasons.append(head1);
     seasons.append(season1);
     seasons.append(head2);
     seasons.append(season2);
     input.insertBefore(seasons, duelButton);
-
   } else {
-
     let seasons = document.querySelector("#seasons");
     if (seasons !== null) {
       seasons.remove();
     }
-    
   }
-
 }
 
 function generateDuel(dict) {
@@ -75,6 +66,10 @@ function displayDuel() {
   generateDuel(dict).then((response) => {
     let output = document.querySelector("#output");
     let pre_message = document.querySelector("p.message");
+    let pre_table = document.querySelector("table");
+    if (pre_table !== null) {
+      pre_table.remove();
+    }
     if (pre_message !== null) {
       pre_message.remove();
     }
@@ -84,10 +79,6 @@ function displayDuel() {
       message.append(response["message"]);
       output.append(message);
       return;
-    }
-    let pre_table = document.querySelector("table");
-    if (pre_table !== null) {
-      pre_table.remove();
     }
     let stats1 = response["stats1"];
     let stats2 = response["stats2"];
