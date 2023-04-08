@@ -142,10 +142,13 @@ def register():
 def query():
     return render_template("query.html")
 
+def divide(a, b):
+    if (b == 0):
+        return 0
+    return a/b
 
 @app.route('/duel-result', methods=["POST"])
 def duel_result():
-    debug = open("debug.txt", "w")
     #input from html form
     data = json.loads(request.data)
     #sqlite3
@@ -228,22 +231,17 @@ def duel_result():
             start = 1
         for i in range(start, col_cnt):
             if (denom1[i] != 0):
-                debug.write(str(num1[i]) + "\n")
-                debug.write(str(denom1[i]) + "\n")
-                num1[i] /= 0.01*denom1[i]
+                num1[i] = 100*divide(num1[i], denom1[i])
             else:
-                num1[i] /= tot_games1
+                num1[i] = divide(num1[i], tot_games1)
             num1[i] = round(num1[i], 1)
         for i in range(start, col_cnt):
             if (denom2[i] != 0):
-                debug.write(str(num2[i]) + "\n")
-                debug.write(str(denom2[i]) + "\n")
-                num2[i] /= 0.01*denom2[i]
+                num2[i] = 100*divide(num2[i], denom2[i])
             else:
-                num2[i] /= tot_games2
+                num2[i] = divide(num2[i], tot_games2)
             num2[i] = round(num2[i], 1)
         #return the processed result
-        debug.close()
         return jsonify({"OK": True, "stats1": num1, "stats2": num2})
     else: #season == "rookie" or season == "custom"
         if (season == "rookie"):
@@ -265,9 +263,9 @@ def duel_result():
                 if (pair[0] == "gp"):
                     stats1.append(tup[tup_col])
                 elif (len(pair[1]) == 1):
-                    stats1.append(round(tup[tup_col]/tup[1], 1))
+                    stats1.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats1.append(round(100*tup[tup_col + 1]/tup[tup_col], 1))
+                    stats1.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
         for tup in p2_res:
             if tup[0] != season2:
@@ -279,9 +277,9 @@ def duel_result():
                 if (pair[0] == "gp"):
                     stats2.append(tup[tup_col])
                 elif (len(pair[1]) == 1):
-                    stats2.append(round(tup[tup_col]/tup[1], 1))
+                    stats2.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats2.append(round(100*tup[tup_col + 1]/tup[tup_col], 1))
+                    stats2.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
         #check that the query was valid
         if (stats1 == []):
@@ -294,6 +292,11 @@ def duel_result():
 @app.route('/duel')
 def duel():
     return render_template("duel.html")
+
+@app.route('/hypo-player-result', methods=["POST"])
+def hypo_player_result():
+    #input from html form
+    data = json.loads(request.data)
 
 
 @app.route('/hypo-player')
