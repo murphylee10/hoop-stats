@@ -4,46 +4,44 @@
 
 {% block content %}
 
-    <div id="content">
+    <div id="input">
 
-        <form action="" method="POST" id="duel-form">
+        <h2>Player 1</h2>
+        <input type="text" name="p1" id="p1">
+        
+        <h2>Player 2</h2>
+        <input type="text" name="p2" id="p2">
 
-            <h2>Player 1</h2>
-            <input type="text" id="p1">
-            
-            <h2>Player 2</h2>
-            <input type="text" id="p2">
+        <h2>Stats</h2>
+        <input type="checkbox" name="gp" id="gp">
+        <label for="gp">Games Played</label><br>
+        <input type="checkbox" name="pts" id="pts">
+        <label for="pts">Points</label><br>
+        <input type="checkbox" name="reb" id="reb">
+        <label for="reb">Rebounds</label><br>
+        <input type="checkbox" name="ast" id="ast">
+        <label for="ast">Assists</label><br>
+        <input type="checkbox" name="fg_pct" id="fg_pct">
+        <label for="fg_pct">Field Goal Percentage</label><br>
+        <input type="checkbox" name="fg3_pct" id="fg3_pct">
+        <label for="fg3_pct">Three Point Percentage</label><br>
+        <input type="checkbox" name="ft_pct" id="ft_pct">
+        <label for="ft_pct">Free Throw Percentage</label><br>
 
-            <h2>Stats</h2>
-            <input type="checkbox" id="g">
-            <label for="g">Games Played</label><br>
-            <input type="checkbox" id="pts">
-            <label for="pts">Points</label><br>
-            <input type="checkbox" id="trb">
-            <label for="trb">Rebounds</label><br>
-            <input type="checkbox" id="ast">
-            <label for="ast">Assists</label><br>
-            <input type="checkbox" id="fg">
-            <label for="fg">Field Goal Percentage</label><br>
-            <input type="checkbox" id="fg3">
-            <label for="fg3">Three Point Percentage</label><br>
-            <input type="checkbox" id="ft">
-            <label for="ft">Free Throw Percentage</label><br>
+        <h2>Season</h2>
+        <select name="season" id="season">
+            <option value="career">Career</option>
+            <option value="rookie">Rookie</option>
+            <option value="custom">Custom</option>
+        </select><br>
 
-            <h2>Year</h2>
-            <select id="year">
-                <option value="career">Career</option>
-                <option value="rookie">Rookie</option>
-                <option value="custom">Custom</option>
-            </select><br>
-
-            <input type="submit" value="Duel!" id="duel">
-
-        </form>
+        <input type="submit" value="Duel!" name="duel" id="duel">
 
         <script src="../static/js/season-dropdown.js"></script>
         <script src="../static/js/duel.js"></script>
     
     </div>
+
+    <div id="output"></div>
 
 {% endblock %}

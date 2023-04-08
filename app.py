@@ -1,20 +1,21 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
 import pandas as pd
 import requests
 from flask_bcrypt import Bcrypt
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
+import sqlite3
+import json
 
 app = Flask(__name__)
-# app.config['SECRET_KEY'] = 'dkf3sldkjfDF23fLJ3b'
+app.config['SECRET_KEY'] = 'dkf3sldkjfDF23fLJ3b'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=10)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
-
 
 # classes for DB
 class User(db.Model):
@@ -137,10 +138,158 @@ def register():
         return render_template("register.html")
 
 
-@app.route('/query')
+@app.route('/query', methods=["GET", "POST"])
 def query():
     return render_template("query.html")
 
+
+@app.route('/duel-result', methods=["POST"])
+def duel_result():
+    debug = open("debug.txt", "w")
+    #input from html form
+    data = json.loads(request.data)
+    #sqlite3
+    con = sqlite3.connect("instance/users.db")
+    #players and season
+    p1 = data.get("p1")
+    p2 = data.get("p2")
+    season = data.get("season")
+    #map corresponding to columns in the database
+    cols = [["gp", ["games_played"]],
+            ["pts", ["points"]],
+            ["reb", ["rebounds"]],
+            ["ast", ["assists"]],
+            ["fg_pct", ["fg_attempts", "fg_made"]],
+            ["fg3_pct", ["fg3_attempts", "fg3_made"]],
+            ["ft_pct", ["ft_attempts", "ft_made"]]]
+    #build the SQL query
+    p1_query = "SELECT year, games_played, "
+    col_cnt = 0
+    for pair in cols:
+        if (data.get(pair[0])):
+            for val in pair[1]:
+                p1_query += val + ", "
+            col_cnt += 1
+    p1_query = p1_query[0 : len(p1_query) - 2]
+    p1_query += " FROM Stats WHERE LOWER(name) == LOWER(\""
+    p2_query = p1_query
+    p1_query += p1 + "\")"
+    p2_query += p2 + "\")"
+    #execute the SQL query
+    cur = con.cursor()
+    p1_res = cur.execute(p1_query).fetchall()
+    cur = con.cursor()
+    p2_res = cur.execute(p2_query).fetchall()
+    #check that the query was valid
+    if (len(p1_res) == 0):
+        return jsonify({"OK": False, "message": "Player 1 is not a (former) NBA player."})
+    if (len(p2_res) == 0):
+        return jsonify({"OK": False, "message": "Player 2 is not a (former) NBA player."})
+    if (col_cnt == 0):
+        return jsonify({"OK": False, "message": "Please select a non-empty set of stats."})
+    if (season == "career"):
+        #process the result of the query
+        num1 = [0 for i in range(col_cnt)]
+        num2 = [0 for i in range(col_cnt)]
+        denom1 = [0 for i in range(col_cnt)]
+        denom2 = [0 for i in range(col_cnt)]
+        tot_games1 = 0
+        tot_games2 = 0
+        for tup in p1_res:
+            num_col = 0
+            tup_col = 2
+            for pair in cols:
+                if (not data.get(pair[0])):
+                    continue
+                if (len(pair[1]) == 1):
+                    num1[num_col] += tup[tup_col]
+                else:
+                    num1[num_col] += tup[tup_col + 1]
+                    denom1[num_col] += tup[tup_col]
+                num_col += 1
+                tup_col += len(pair[1])
+            tot_games1 += tup[1]
+        for tup in p2_res:
+            num_col = 0
+            tup_col = 2
+            for pair in cols:
+                if (not data.get(pair[0])):
+                    continue
+                if (len(pair[1]) == 1):
+                    num2[num_col] += tup[tup_col]
+                else:
+                    num2[num_col] += tup[tup_col + 1]
+                    denom2[num_col] += tup[tup_col]
+                num_col += 1
+                tup_col += len(pair[1])
+            tot_games2 += tup[1]
+        start = 0
+        if (data.get("gp")):
+            start = 1
+        for i in range(start, col_cnt):
+            if (denom1[i] != 0):
+                debug.write(str(num1[i]) + "\n")
+                debug.write(str(denom1[i]) + "\n")
+                num1[i] /= 0.01*denom1[i]
+            else:
+                num1[i] /= tot_games1
+            num1[i] = round(num1[i], 1)
+        for i in range(start, col_cnt):
+            if (denom2[i] != 0):
+                debug.write(str(num2[i]) + "\n")
+                debug.write(str(denom2[i]) + "\n")
+                num2[i] /= 0.01*denom2[i]
+            else:
+                num2[i] /= tot_games2
+            num2[i] = round(num2[i], 1)
+        #return the processed result
+        debug.close()
+        return jsonify({"OK": True, "stats1": num1, "stats2": num2})
+    else: #season == "rookie" or season == "custom"
+        if (season == "rookie"):
+            season1 = min(p1_res)[0]
+            season2 = min(p2_res)[0]
+        else:
+            season1 = int(data["season1"])
+            season2 = int(data["season2"])
+        #process the result of the query
+        stats1 = []
+        stats2 = []
+        for tup in p1_res:
+            if tup[0] != season1:
+                continue
+            tup_col = 2
+            for pair in cols:
+                if (not data.get(pair[0])):
+                    continue
+                if (pair[0] == "gp"):
+                    stats1.append(tup[tup_col])
+                elif (len(pair[1]) == 1):
+                    stats1.append(round(tup[tup_col]/tup[1], 1))
+                else:
+                    stats1.append(round(100*tup[tup_col + 1]/tup[tup_col], 1))
+                tup_col += len(pair[1])
+        for tup in p2_res:
+            if tup[0] != season2:
+                continue
+            tup_col = 2
+            for pair in cols:
+                if (not data.get(pair[0])):
+                    continue
+                if (pair[0] == "gp"):
+                    stats2.append(tup[tup_col])
+                elif (len(pair[1]) == 1):
+                    stats2.append(round(tup[tup_col]/tup[1], 1))
+                else:
+                    stats2.append(round(100*tup[tup_col + 1]/tup[tup_col], 1))
+                tup_col += len(pair[1])
+        #check that the query was valid
+        if (stats1 == []):
+            return jsonify({"OK": False, "message": ("Player 1 did not play in the " + str(season1 - 1) + "-" + str(season1) + " season.")})
+        if (stats2 == []):
+            return jsonify({"OK": False, "message": ("Player 2 did not play in the " + str(season2 - 1) + "-" + str(season2) + " season.")})
+        #return the processed result
+        return jsonify({"OK": True, "stats1": stats1, "stats2": stats2})
 
 @app.route('/duel')
 def duel():
