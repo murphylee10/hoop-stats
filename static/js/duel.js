@@ -148,7 +148,8 @@ function displayDuel() {
     } else {
       winner.append(stats2[stats2.length - 1]);
     }
-    output.append(winner);
+    let surround = document.querySelector('.surround');
+    surround.append(winner);
     let p1_dict = {}
     let p2_dict = {}
     for (let i = 0, j = 0; i < cols.length; ++i) {
