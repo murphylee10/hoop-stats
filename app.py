@@ -435,7 +435,7 @@ def hypo_player_result():
         for j in range(len(cols)):
             predicted_stats[i].append(
                 divide(data[cols[j][0]], avg_stats[0][j])*avg_stats[i][j])
-            if (cols[j][0] == "GP"):
+            if (cols[j][0] == "gp"):
                 predicted_stats[i][j] = round(predicted_stats[i][j])
                 predicted_stats[i][j] = max(predicted_stats[i][j], 1)
                 predicted_stats[i][j] = min(predicted_stats[i][j], 82)

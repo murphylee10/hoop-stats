@@ -67,11 +67,15 @@ function displayDuel() {
     let output = document.querySelector("#output");
     let pre_message = document.querySelector("p.message");
     let pre_table = document.querySelector("table");
+    let pre_winner = document.querySelector("#winner");
     if (pre_table !== null) {
       pre_table.remove();
     }
     if (pre_message !== null) {
       pre_message.remove();
+    }
+    if (pre_winner !== null) {
+      pre_winner.remove();
     }
     if (!response["OK"]) {
       let message = document.createElement("p");
@@ -128,21 +132,49 @@ function displayDuel() {
     table.append(row1);
     table.append(row2);
     output.append(table);
+    let cnt1 = 0, cnt2 = 0;
+    for (let i = 0; i < stats1.length - 1; ++i) {
+      if (stats1[i] > stats2[i]) {
+        ++cnt1;
+      } else {
+        ++cnt2;
+      }
+    }
+    let winner = document.createElement("h3");
+    winner.setAttribute("id", "winner");
+    winner.append("Winner: ");
+    if (cnt1 > cnt2) {
+      winner.append(stats1[stats1.length - 1]);
+    } else {
+      winner.append(stats2[stats2.length - 1]);
+    }
+    output.append(winner);
     let p1_dict = {}
     let p2_dict = {}
-    for (let i = 0; i < cols.length; ++i) {
+    for (let i = 0, j = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
-      p1_dict[cols[i]] = stats1[i];
+      p1_dict[cols[i]] = stats1[j];
+      ++j;
     }
     p1_dict["name"] = stats1[stats1.length - 1];
-    for (let i = 0; i < cols.length; ++i) {
+    for (let i = 0, j = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
-      p2_dict[cols[i]] = stats2[i];
+      p2_dict[cols[i]] = stats2[j];
+      ++j;
     }
     p2_dict["name"] = stats2[stats2.length - 1];
+    if (cnt1 > cnt2) {
+      p1_dict["winner"] = true;
+      p2_dict["winner"] = false;
+    } else {
+      p1_dict["winner"] = false;
+      p2_dict["winner"] = true;
+    }
+    console.log(p1_dict);
+    console.log(p2_dict);
   });
 }
