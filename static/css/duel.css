@@ -58,6 +58,13 @@
   margin-top: 1em;
 }
 
+#seasons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
 #duel {
   background: rgba(159, 199, 199, 0.4);
   width: 20%;

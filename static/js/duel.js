@@ -7,7 +7,9 @@ duelButton.addEventListener("click", displayDuel);
 function changeOptions() {
   //add dropdowns for custom season choices
   if (compareBy.value === "custom") {
-    let input = document.querySelector("#input");
+    // let input = document.querySelector("#input");
+    let season_div = document.querySelector('.season');
+
     let seasons = document.createElement("div");
     seasons.setAttribute("id", "seasons");
     let season1 = document.createElement("select");
@@ -26,7 +28,8 @@ function changeOptions() {
     seasons.append(season1);
     seasons.append(head2);
     seasons.append(season2);
-    input.insertBefore(seasons, duelButton);
+    // input.insertBefore(seasons, duelButton);
+    season_div.insertBefore(seasons, duelButton);
   } else {
     let seasons = document.querySelector("#seasons");
     if (seasons !== null) {
