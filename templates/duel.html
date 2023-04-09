@@ -4,6 +4,8 @@
 
 {% block style %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/duel.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,51 +18,75 @@
     <div class="container">
         <div id="input">
             <div class="player-input">
-                <div class="player-name">
+                <div class="player-name" id="p1-div">
                     <h2>Player 1</h2>
                     <input type="text" name="p1" id="p1" placeholder="Enter Player 1 Here">
                 </div>
                 <div class="swords">
                     <img src="{{ url_for('static', filename='images/swords.png') }}" alt="Swords">
                 </div>
-                <div class="player-name">
+                <div class="player-name" id="p2-div">
                     <h2>Player 2</h2>
                     <input type="text" name="p2" id="p2" placeholder="Enter Player 2 Here">
                 </div>
             </div>
-    
-            <h2>Stats</h2>
-            <input type="checkbox" name="gp" id="gp">
-            <label for="gp">Games Played</label><br>
-            <input type="checkbox" name="pts" id="pts">
-            <label for="pts">Points</label><br>
-            <input type="checkbox" name="reb" id="reb">
-            <label for="reb">Rebounds</label><br>
-            <input type="checkbox" name="ast" id="ast">
-            <label for="ast">Assists</label><br>
-            <input type="checkbox" name="fg_pct" id="fg_pct">
-            <label for="fg_pct">Field Goal Percentage</label><br>
-            <input type="checkbox" name="fg3_pct" id="fg3_pct">
-            <label for="fg3_pct">Three Point Percentage</label><br>
-            <input type="checkbox" name="ft_pct" id="ft_pct">
-            <label for="ft_pct">Free Throw Percentage</label><br>
-    
-            <h2>Season</h2>
-            <select name="season" id="season">
-                <option value="career">Career</option>
-                <option value="rookie">Rookie</option>
-                <option value="custom">Custom</option>
-            </select><br>
-    
-            <input type="submit" value="Duel!" name="duel" id="duel">
-    
-            
+
+            <div class="player-stats">
+                <h2>Stats</h2>
+                <div class="stats">
+                    <div class="stat-group">
+                        <div class="stat">
+                            <input type="checkbox" name="gp" id="gp">
+                            <label for="gp">Games Played</label><br>
+                        </div>
+                        <div class="stat">
+                            <input type="checkbox" name="pts" id="pts">
+                            <label for="pts">Points</label><br>
+                        </div>
+                        <div class="stat">
+                            <input type="checkbox" name="fg_pct" id="fg_pct">
+                            <label for="fg_pct">Field Goal Percentage</label><br>
+                        </div>
+                        <div class="stat">
+                            <input type="checkbox" name="ast" id="ast">
+                            <label for="ast">Assists</label><br>
+                        </div>
+                    </div>
+                    <div class="stat-group">
+                        <br>
+                        <div class="stat">
+                            <input type="checkbox" name="reb" id="reb">
+                            <label for="reb">Rebounds</label><br>
+                        </div>
+                        
+                        <div class="stat">
+                            <input type="checkbox" name="fg3_pct" id="fg3_pct">
+                            <label for="fg3_pct">Three Point Percentage</label><br>
+                        </div>
+                        <div class="stat">
+                            <input type="checkbox" name="ft_pct" id="ft_pct">
+                            <label for="ft_pct">Free Throw Percentage</label><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="season">
+                <h2>Season</h2>
+                <select name="season" id="season">
+                    <option value="career">Career</option>
+                    <option value="rookie">Rookie</option>
+                    <option value="custom">Custom</option>
+                </select><br>
+        
+                <input type="submit" value="Duel!" name="duel" id="duel">
+            </div>      
         </div>
-        
-        <div id="output"></div>
-        
-    </div>
     
+        <div id="output"></div>
+
+    </div>
+
     <script src="../static/js/season-dropdown.js"></script>
     <script src="../static/js/duel.js"></script>
+
 {% endblock %}
