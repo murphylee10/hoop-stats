@@ -75,7 +75,7 @@
 }
 
 .container {
-  height: 70vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -124,9 +124,9 @@
 }
 
 .footer {
-  position: fixed;
+  /* position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: 0; */
   width: 100%;
   text-align: center;
 }
