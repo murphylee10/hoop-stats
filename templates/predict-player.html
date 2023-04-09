@@ -1,58 +1,49 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/predict-player.css') }}"
+/>
+{% endblock %} {% block title %}SwishStats{% endblock %} {% block content %}
+<div id="input">
+  <div class="header">
+    <h2>Build Your Player</h2>
+    <p>
+      Welcome to the build you player page! In this page, you can build a
+      hypothetical player on which season they debuted in and their stats as a
+      rookie. Note that we can only predict the stats of the hypothetical up
+      until the current NBA season.
+    </p>
+  </div>
+  <h3>Name</h3>
+  <input type="text" name="p_name" id="p_name" />
+  <h3>Season</h3>
+  <select name="season" id="season"></select>
+  <br /><br /><br />
+  <h2>Stats</h2>
+  <p>
+    Enter the player's stats here. Please note that all fields are mandatory to
+    ensure that we can provide an accurate prediction.
+  </p>
+  <h3>Games Played</h3>
+  <input type="text" name="gp" id="gp" />
+  <h3>Points</h3>
+  <input type="text" name="pts" id="pts" />
+  <h3>Rebounds</h3>
+  <input type="text" name="reb" id="reb" />
+  <h3>Assists</h3>
+  <input type="text" name="ast" id="ast" />
+  <h3>Field Goal Percentage</h3>
+  <input type="text" name="fg_pct" id="fg_pct" />
+  <h3>Three Point Percentage</h3>
+  <input type="text" name="fg3_pct" id="fg3_pct" />
+  <h3>Free Throw Percentage</h3>
+  <input type="text" name="ft_pct" id="ft_pct" /><br />
 
-{% block style %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/predict-player.css') }}">
-{% endblock %}
+  <input type="submit" value="Build Player!" name="build" id="build" />
 
-{% block title %}SwishStats{% endblock %}
+  <script src="../static/js/season-dropdown.js"></script>
+  <script src="../static/js/predict-player.js"></script>
+</div>
 
-{% block content %}
-    <div id="input">
-
-        <h2>Build Your Player</h2>
-        <p>
-            Welcome to the build you player page! 
-            In this page, you can build a hypothetical
-            player on which season they debuted in and
-            their stats as a rookie. Note that we can
-            only predict the stats of the hypothetical
-            up until the current NBA season.
-        </p>
-
-        <h3>Name</h3>
-        <input type="text" name="p_name" id="p_name">
-        <h3>Season</h3>
-        <select name="season" id="season"></select>
-
-        <h2>Stats</h2>
-        <p>
-            Enter the player's stats here. Please note
-            that all fields are mandatory to ensure that
-            we can provide an accurate prediction.
-        </p>
-        <h3>Games Played</h3>
-        <input type="text" name="gp" id="gp">
-        <h3>Points</h3>
-        <input type="text" name="pts" id="pts">
-        <h3>Rebounds</h3>
-        <input type="text" name="reb" id="reb">
-        <h3>Assists</h3>
-        <input type="text" name="ast" id="ast">
-        <h3>Field Goal Percentage</h3>
-        <input type="text" name="fg_pct" id="fg_pct">
-        <h3>Three Point Percentage</h3>
-        <input type="text" name="fg3_pct" id="fg3_pct">
-        <h3>Free Throw Percentage</h3>
-        <input type="text" name="ft_pct" id="ft_pct"><br>
-
-        <input type="submit" value="Build Player!" name="build" id="build">
-
-        <script src="../static/js/season-dropdown.js"></script>
-        <script src="../static/js/predict-player.js"></script>
-
-    </div>
-
-    <div id="output">
-        
-    </div>
+<div id="output"></div>
 {% endblock %}
