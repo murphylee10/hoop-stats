@@ -126,5 +126,21 @@ function displayDuel() {
     table.append(row1);
     table.append(row2);
     output.append(table);
+    let p1_dict = {}
+    let p2_dict = {}
+    for (let i = 0; i < cols.length; ++i) {
+      if (!dict[cols[i]]) {
+        continue;
+      }
+      p1_dict[cols[i]] = stats1[i];
+    }
+    p1_dict["name"] = stats1[cols.length];
+    for (let i = 0; i < cols.length; ++i) {
+      if (!dict[cols[i]]) {
+        continue;
+      }
+      p2_dict[cols[i]] = stats2[i];
+    }
+    p2_dict["name"] = stats2[cols.length];
   });
 }
