@@ -105,8 +105,8 @@ function displayDuel() {
     table.append(headers);
     let row1 = document.createElement("tr");
     let row2 = document.createElement("tr");
-    row1.append(stats1[cols.length]);
-    row2.append(stats2[cols.length]);
+    row1.append(stats1[stats1.length - 1]);
+    row2.append(stats2[stats2.length - 1]);
     for (let i = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
@@ -134,13 +134,13 @@ function displayDuel() {
       }
       p1_dict[cols[i]] = stats1[i];
     }
-    p1_dict["name"] = stats1[cols.length];
+    p1_dict["name"] = stats1[stats1.length - 1];
     for (let i = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
       p2_dict[cols[i]] = stats2[i];
     }
-    p2_dict["name"] = stats2[cols.length];
+    p2_dict["name"] = stats2[stats2.length - 1];
   });
 }
