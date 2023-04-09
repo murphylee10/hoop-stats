@@ -3,26 +3,28 @@
 {% block title %}SwishStats{% endblock %}
 
 {% block content %}
-    <div id="content">
+    <div id="input">
 
         <h2>Build Your Player</h2>
         <p>
             Welcome to the build you player page! 
             In this page, you can build a hypothetical
             player on which season they debuted in and
-            their stats as a rookie.
+            their stats as a rookie. Note that we can
+            only predict the stats of the hypothetical
+            up until the current NBA season.
         </p>
 
         <h3>Name</h3>
         <input type="text" name="p_name" id="p_name">
         <h3>Season</h3>
-        <select name = "season" id="season"></select>
+        <select name="season" id="season"></select>
 
         <h2>Stats</h2>
         <p>
-            Enter the player's stats here. Any empty fields
-            will default to the league average for the
-            given season.
+            Enter the player's stats here. Please note
+            that all fields are mandatory to ensure that
+            we can provide an accurate prediction.
         </p>
         <h3>Games Played</h3>
         <input type="text" name="gp" id="gp">
@@ -42,7 +44,11 @@
         <input type="submit" value="Build Player!" name="build" id="build">
 
         <script src="../static/js/season-dropdown.js"></script>
-        <script src="../static/js/hypo-player.js"></script>
+        <script src="../static/js/predict-player.js"></script>
 
+    </div>
+
+    <div id="output">
+        
     </div>
 {% endblock %}

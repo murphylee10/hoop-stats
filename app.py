@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
 import sqlite3
 import json
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dkf3sldkjfDF23fLJ3b'
@@ -136,11 +137,6 @@ def register():
 
     else:
         return render_template("register.html")
-
-
-@app.route('/query', methods=["GET", "POST"])
-def query():
-    return render_template("query.html")
 
 def divide(a, b):
     if (b == 0):
@@ -293,15 +289,112 @@ def duel_result():
 def duel():
     return render_template("duel.html")
 
-@app.route('/hypo-player-result', methods=["POST"])
+def toint(x):
+    try:
+        return int(x)
+    except:
+        return None
+
+def tofloat(x):
+    try:
+        return float(x)
+    except:
+        return None
+
+@app.route('/predict-player-result', methods=["POST"])
 def hypo_player_result():
+    debug = open("debug.txt", "w")
     #input from html form
     data = json.loads(request.data)
+    #sqlite3
+    con = sqlite3.connect("instance/users.db")
+    #map corresponding to columns in the database
+    cols = [["gp", ["games_played"]],
+            ["pts", ["points"]],
+            ["reb", ["rebounds"]],
+            ["ast", ["assists"]],
+            ["fg_pct", ["fg_attempts", "fg_made"]],
+            ["fg3_pct", ["fg3_attempts", "fg3_made"]],
+            ["ft_pct", ["ft_attempts", "ft_made"]]]
+    #check that the query is valid
+    data["gp"] = toint(data["gp"])
+    if (data["gp"] is None or 1 > data["gp"] or data["gp"] > 82):
+        return jsonify({"OK": False, "message": "Please enter an INTEGER in the RANGE [1, 82] for Games Played."})
+    for pair in cols[1:]:
+        data[pair[0]] = tofloat(data[pair[0]])
+        if (data[pair[0]] == None or data[pair[0]] < 0):
+            return jsonify({"OK": False, "message": "Please check that all entered Stats are NON-NEGATIVE NUMBERS."})
+    for pair in cols[1:]:
+        if (pair[0].find("pct") != -1 and data[pair[0]] > 100):
+            return jsonify({"OK": False, "message": "Please check that all entered percentages are LESS THAN OR EQUAL to 100."})
+    #query the SQL database
+    cur = con.cursor()
+    cur.execute("DROP VIEW IF EXISTS RookieSeasons")
+    cur = con.cursor()
+    cur.execute("CREATE VIEW RookieSeasons AS SELECT name, MIN(year), games_played as name, year, games_played FROM Stats GROUP BY name")
+    cur = con.cursor()
+    cur.execute("DROP VIEW IF EXISTS TargetPlayers")
+    cur = con.cursor()
+    cur.execute("CREATE VIEW TargetPlayers AS SELECT name FROM RookieSeasons WHERE games_played==" + str(data["gp"]))
+    cur = con.cursor()
+    res = cur.execute("SELECT * FROM TargetPlayers NATURAL JOIN Stats").fetchall()
+    #process the results of query
+    accum_stats = []
+    num_players = []
+    name_to_season = {}
+    for tup in res:
+        if (tup[0] not in name_to_season):
+            name_to_season[tup[0]] = 1
+        else:
+            name_to_season[tup[0]] += 1
+        if (name_to_season[tup[0]] > len(accum_stats)):
+            accum_stats.append([0 for i in range(len(cols))])
+            num_players.append(0)
+        j = 0
+        k = 2
+        while (j < len(cols)):
+            if (cols[j][0] == "gp"):
+                accum_stats[name_to_season[tup[0]] - 1][j] += tup[k]
+            elif (len(cols[j][1]) == 1):
+                accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k], tup[2])
+            else:
+                accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k + 1], tup[k])
+                if (cols[j][0] == "fg3_pct"):
+                    debug.write(str(divide(tup[k + 1], tup[k])) + "\n")
+            k += len(cols[j][1])
+            j += 1
+        num_players[name_to_season[tup[0]] - 1] += 1
+    avg_stats = [[] for i in range(len(accum_stats))]
+    for i in range(len(accum_stats)):
+        season_stats = accum_stats[i]
+        for j in range(len(cols)):
+            avg_stats[i].append(accum_stats[i][j]/num_players[i])
+        debug.write(str(avg_stats[i]) + "\n")
+    cur_year = datetime.now().year
+    predicted_stats = []
+    for season in range(int(data["season"]), cur_year):
+        i = season - int(data["season"])
+        if (num_players[i] < num_players[0]/2):
+            break
+        predicted_stats.append([])
+        for j in range(len(cols)):
+            predicted_stats[i].append(divide(data[cols[j][0]],avg_stats[0][j])*avg_stats[i][j])
+            if (cols[j][0] == "GP"):
+                predicted_stats[i][j] = round(predicted_stats[i][j])
+                predicted_stats[i][j] = max(predicted_stats[i][j], 1)
+                predicted_stats[i][j] = min(predicted_stats[i][j], 82)
+            elif (len(cols[j][1]) == 1):
+                predicted_stats[i][j] = round(predicted_stats[i][j], 1)
+            else:
+                predicted_stats[i][j] = round(predicted_stats[i][j])
+                predicted_stats[i][j] = min(predicted_stats[i][j], 100)
+    debug.close()
+    return jsonify({"OK": True, "stats": predicted_stats})
+    
 
-
-@app.route('/hypo-player')
+@app.route('/predict-player')
 def hypo_player():
-    return render_template("hypo-player.html")
+    return render_template("predict-player.html")
 
 
 app.run(debug=True, host='0.0.0.0', port=81)
