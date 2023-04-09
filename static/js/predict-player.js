@@ -83,20 +83,16 @@ function displayPrediction() {
 
 const output = document.getElementById("output");
 
-// add header
 const header = document.createElement("h2");
 header.textContent = "Predicted Season Stats";
 output.appendChild(header);
 
-// create table
 const table = document.createElement("table");
 output.appendChild(table);
 
-// create header row
 const headerRow = document.createElement("tr");
 table.appendChild(headerRow);
 
-// add headers
 [
   "Name",
   "Position",
@@ -111,7 +107,6 @@ table.appendChild(headerRow);
   headerRow.appendChild(th);
 });
 
-// add data rows
 data.forEach((player) => {
   const row = document.createElement("tr");
   table.appendChild(row);
