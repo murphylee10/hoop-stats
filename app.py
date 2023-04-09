@@ -322,7 +322,7 @@ def hypo_player_result():
     for pair in cols[1:]:
         data[pair[0]] = tofloat(data[pair[0]])
         if (data[pair[0]] == None or data[pair[0]] < 0):
-            return jsonify({"OK": False, "message": "Please check that all entered Stats are NON-NEGATIVE NUMBERS."})
+            return jsonify({"OK": False, "message": "Please check that all Stats have been entered and they are NON-NEGATIVE NUMBERS."})
     for pair in cols[1:]:
         if (pair[0].find("pct") != -1 and data[pair[0]] > 100):
             return jsonify({"OK": False, "message": "Please check that all entered percentages are LESS THAN OR EQUAL to 100."})
@@ -368,7 +368,7 @@ def hypo_player_result():
             avg_stats[i].append(accum_stats[i][j]/num_players[i])
     cur_year = datetime.now().year
     predicted_stats = []
-    for season in range(int(data["season"]), cur_year):
+    for season in range(int(data["season"]), cur_year + 1):
         i = season - int(data["season"])
         if (num_players[i] < num_players[0]/2):
             break
@@ -382,7 +382,7 @@ def hypo_player_result():
             elif (len(cols[j][1]) == 1):
                 predicted_stats[i][j] = round(predicted_stats[i][j], 1)
             else:
-                predicted_stats[i][j] = round(predicted_stats[i][j])
+                predicted_stats[i][j] = round(predicted_stats[i][j], 1)
                 predicted_stats[i][j] = min(predicted_stats[i][j], 100)
     return jsonify({"OK": True, "stats": predicted_stats})
     

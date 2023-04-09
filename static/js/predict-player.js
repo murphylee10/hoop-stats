@@ -47,6 +47,9 @@ function displayPrediction() {
     console.log(String(stats));
     let table = document.createElement("table");
     let headers = document.createElement("tr");
+    let season_header = document.createElement("th");
+    season_header.append("Season");
+    headers.append(season_header);
     for (let i = 0; i < cols.length; ++i) {
       let str_header = cols[i];
       let pos = str_header.search("_pct");
@@ -60,6 +63,9 @@ function displayPrediction() {
     table.append(headers);
     for (let i = 0; i < stats.length; ++i) {
       let row = document.createElement("tr");
+      let season_cell = document.createElement("td");
+      season_cell.append(String(Number(dict["season"]) + i - 1) + "-" + String(Number(dict["season"]) + i))
+      row.append(season_cell);
       for (let j = 0; j < stats[i].length; ++j) {
         let cell = document.createElement("td");
         cell.append(stats[i][j]);
