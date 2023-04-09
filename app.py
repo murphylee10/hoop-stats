@@ -303,7 +303,6 @@ def tofloat(x):
 
 @app.route('/predict-player-result', methods=["POST"])
 def hypo_player_result():
-    debug = open("debug.txt", "w")
     #input from html form
     data = json.loads(request.data)
     #sqlite3
@@ -359,8 +358,6 @@ def hypo_player_result():
                 accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k], tup[2])
             else:
                 accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k + 1], tup[k])
-                if (cols[j][0] == "fg3_pct"):
-                    debug.write(str(divide(tup[k + 1], tup[k])) + "\n")
             k += len(cols[j][1])
             j += 1
         num_players[name_to_season[tup[0]] - 1] += 1
@@ -369,7 +366,6 @@ def hypo_player_result():
         season_stats = accum_stats[i]
         for j in range(len(cols)):
             avg_stats[i].append(accum_stats[i][j]/num_players[i])
-        debug.write(str(avg_stats[i]) + "\n")
     cur_year = datetime.now().year
     predicted_stats = []
     for season in range(int(data["season"]), cur_year):
@@ -388,7 +384,6 @@ def hypo_player_result():
             else:
                 predicted_stats[i][j] = round(predicted_stats[i][j])
                 predicted_stats[i][j] = min(predicted_stats[i][j], 100)
-    debug.close()
     return jsonify({"OK": True, "stats": predicted_stats})
     
 
