@@ -5,6 +5,7 @@ let duelButton = document.querySelector("#duel");
 duelButton.addEventListener("click", displayDuel);
 
 function changeOptions() {
+  //add dropdowns for custom season choices
   if (compareBy.value === "custom") {
     let input = document.querySelector("#input");
     let seasons = document.createElement("div");
@@ -35,6 +36,7 @@ function changeOptions() {
 }
 
 function generateDuel(dict) {
+  //send a post request to app.py
   return new Promise((resolve, reject) => {
     fetch("/duel-result", {
       method: "POST",
@@ -51,6 +53,7 @@ function generateDuel(dict) {
 }
 
 function displayDuel() {
+  //dictionary with values from the HTML form
   let dict = {};
   dict["p1"] = document.querySelector("#p1").value;
   dict["p2"] = document.querySelector("#p2").value;
@@ -64,6 +67,7 @@ function displayDuel() {
     dict["season2"] = document.querySelector("#season2").value;
   }
   generateDuel(dict).then((response) => {
+    //reset messages and table
     let output = document.querySelector("#output");
     let pre_message = document.querySelector("p.message");
     let pre_table = document.querySelector("table");
@@ -84,10 +88,12 @@ function displayDuel() {
       output.append(message);
       return;
     }
+    //the returned stats from app.py
     let stats1 = response["stats1"];
     let stats2 = response["stats2"];
     console.log(String(stats1));
     console.log(String(stats2));
+    //display the stats as a table
     let table = document.createElement("table");
     let headers = document.createElement("tr");
     let name_header = document.createElement("th");
@@ -150,6 +156,7 @@ function displayDuel() {
     }
     let surround = document.querySelector('.surround');
     surround.append(winner);
+    //put the stats into a dictionary
     let p1_dict = {}
     let p2_dict = {}
     for (let i = 0, j = 0; i < cols.length; ++i) {

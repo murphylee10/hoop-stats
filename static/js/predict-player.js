@@ -3,6 +3,7 @@ let buildButton = document.querySelector("#build");
 buildButton.addEventListener("click", displayPrediction);
 
 function generatePrediction(dict) {
+  //sends a post request to app.py
   return new Promise((resolve, reject) => {
     fetch("/predict-player-result", {
       method: "POST",
@@ -19,6 +20,7 @@ function generatePrediction(dict) {
 }
 
 function displayPrediction() {
+  //dictionary with values from the html form
   let dict = {};
   dict["p_name"] = document.querySelector("#p_name").value;
   dict["season"] = document.querySelector("#season").value;
@@ -28,7 +30,6 @@ function displayPrediction() {
   }
   generatePrediction(dict).then((response) => {
     let output = document.querySelector("#output");
-
     // reset header
     let rem_header = document.querySelector('#pred-header h2');
     if (rem_header != null) {
@@ -38,7 +39,7 @@ function displayPrediction() {
     let new_header = document.createElement('h2')
     new_header.innerText = "Predicted Player Stats"
     pred_header_div.appendChild(new_header)
-
+    //reset messages and table
     let pre_message = document.querySelector("p.message");
     let pre_table = document.querySelector("table");
     if (pre_table !== null) {
@@ -54,8 +55,10 @@ function displayPrediction() {
       output.append(message);
       return;
     }
+    //the returned stats from app.py
     let stats = response["stats"];
     console.log(String(stats));
+    //display the stats as a table
     let table = document.createElement("table");
     let headers = document.createElement("tr");
     let season_header = document.createElement("th");
