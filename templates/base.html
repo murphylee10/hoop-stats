@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SwishStats{% endblock %}</title>
-        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    <title>{% block title %}HoopStats{% endblock %}</title>
+    <script src="https://kit.fontawesome.com/dd1637e640.js" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
                 integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
-                    integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous"> -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css"
+            integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home-page.css') }}">
     {% block style %}{% endblock %}
 </head>
 <body>
-    <header>
+    <!-- <header>
         <section id="navbar">
             <div class="navbar1">
                 <h1>
@@ -24,28 +25,128 @@
             </div>
             <div class="nav-bar">
                 <ul>
+                    {% if "user" not in session %}
                     <li>
                         <a class="current" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
                     </li>
+                    {% endif %}
+                    {% if "user" not in session %}
                     <li>
                         <a href="/register"><i class="fa fa-fw fa-envelope"></i>Register</a>
                     </li>
+                    {% endif %}
+                    {% if "user" not in session %}
                     <li>
                         <a href="/login"><i class="fa fa-fw fa-user"></i>login</a>
                     </li>
+                    {% endif %}
+                    {% if "user" in session %}
                     <li>
                         <a href="/profile"><i class="fa-solid fa-circle-user"></i> profile</a>
                     </li>
+                    {% endif %}
+                    {% if "user" in session %}
                     <li>
                         <a href="/query">Query</a><i class="fa fa-fw fa-question" id="question"></i>
                     </li>
+                    {% endif %}
+                    {% if "user" in session %}
                     <li>
                         <a href="/duel"><i class="fa-solid fa-shield-halved"></i> Duel</a>
                     </li>
+                    {% endif %}
+                    {% if "user" in session %}
+                    <li>
+                        <a href="/logout"><i class="fa fa-fw fa-user"></i>logout</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </section>
+    </header> -->
+
+    <header>
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+            <!-- Brand -->
+            <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+            <div class="navbar1">
+                <h1>
+                    <span class="highlight">Hoop</span><span class="highlight1">Stats</span>
+                </h1>
+            </div>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+
+            <div class="collapse navbar-collapse nav-bar bg-dark justify-content-endx" id="collapsibleNavbar">
+                <ul class="justify-content-end">
+                    {% if "user" not in session %}
+                    <li class="nav-item">
+                        <a class="current" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+                    </li>
+                    {% endif %}
+                    {% if "user" not in session %}
+                    <li class="nav-item">
+                        <a href="/register"><i class="fa fa-fw fa-envelope"></i>Register</a>
+                    </li>
+                    {% endif %}
+                    {% if "user" not in session %}
+                    <li class="nav-item">
+                        <a href="/login"><i class="fa fa-fw fa-user"></i>login</a>
+                    </li>
+                    {% endif %}
+                    {% if "user" in session %}
+                    <li class="nav-item">
+                        <a href="/profile"><i class="fa-solid fa-circle-user"></i> profile</a>
+                    </li>
+                    {% endif %}
+                    {% if "user" in session %}
+                    <li class="nav-item">
+                        <a href="/query">Query</a><i class="fa fa-fw fa-question" id="question"></i>
+                    </li>
+                    {% endif %}
+                    {% if "user" in session %}
+                    <li class="nav-item">
+                        <a href="/duel"><i class="fa-solid fa-shield-halved"></i> Duel</a>
+                    </li>
+                    {% endif %}
+                    {% if "user" in session %}
+                    <li class="nav-item">
+                        <a href="/logout"><i class="fa fa-fw fa-user"></i>logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
     </header>
+
+    
+
+    {% with messages = get_flashed_messages(with_categories = True) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ category }} - {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ category }} - {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     <!-- <nav class="navbar navbar-expand-lg navbar-red navbar-light bg-light">
         <div class="container-fluid d-flex justify-content-between">
@@ -128,6 +229,17 @@
     {% block content %}
 
     {% endblock %}
+
+    <footer class="footer">
+        <h1 class="footer-title">Project Contributors:</h1>
+        <br />
+        <ul>
+            <li>Andrew Tam</li>
+            <li>Zuhair Khan</li>
+            <li>Murphy Lee</li>
+        </ul>
+        <p>HoopStats, Copyright &copy; 2023</p>
+    </footer>
 
     <!-- <footer class="text-center text-lg-start bg-light text-muted">
         <section class="">

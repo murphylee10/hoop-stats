@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, session, jsonify
 import pandas as pd
 import requests
 from flask_bcrypt import Bcrypt
@@ -19,6 +19,8 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 # classes for DB
+
+
 class User(db.Model):
     __tablename__ = 'User'
     user_name = db.Column(db.String(20), primary_key=True)
@@ -114,9 +116,50 @@ def home():
 # Web routes go here
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = User.query.filter_by(user_name=username).first()
+        if (not user):
+            flash(f"No such user with username '{username}'", category="error")
+            return render_template("login.html")
+        elif (not bcrypt.check_password_hash(user.password, password)):
+            flash("Sorry, wrong password", category="error")
+            return render_template("login.html")
+        else:
+            # the user has properly logged in... so store
+            # their username for this session
+            session["user"] = username
+            return redirect(url_for('profile', username=username))
+
     return render_template("login.html")
+
+
+@app.route('/profile/<username>')
+def profile(username):
+    if ("user" not in session):
+        flash("Log in before viewing this page", category="error")
+        return redirect(url_for('login'))
+    elif (session['user'] != username):
+        flash("Not your account", category="error")
+        return redirect(url_for('login'))
+    else:
+        # user = User.query.filter_by(user_name=username).first()
+        # return render_template("success.html", name=user.full_name)
+        return render_template("profile.html")
+
+
+@app.route('/profile')
+def profile_link():
+    return redirect(url_for('profile', username=session['user']))
+
+
+@app.route('/logout')
+def logout():
+    session.pop("user", None)
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -132,28 +175,30 @@ def register():
             flash("User successfully added")
             return redirect(url_for('login'))
         except exc.IntegrityError:
-            flash("Username already exists")
+            flash("Username already exists", category="error")
             return render_template('register.html')
 
     else:
         return render_template("register.html")
+
 
 def divide(a, b):
     if (b == 0):
         return 0
     return a/b
 
+
 @app.route('/duel-result', methods=["POST"])
 def duel_result():
-    #input from html form
+    # input from html form
     data = json.loads(request.data)
-    #sqlite3
+    # sqlite3
     con = sqlite3.connect("instance/users.db")
-    #players and season
+    # players and season
     p1 = data.get("p1")
     p2 = data.get("p2")
     season = data.get("season")
-    #map corresponding to columns in the database
+    # map corresponding to columns in the database
     cols = [["gp", ["games_played"]],
             ["pts", ["points"]],
             ["reb", ["rebounds"]],
@@ -161,7 +206,7 @@ def duel_result():
             ["fg_pct", ["fg_attempts", "fg_made"]],
             ["fg3_pct", ["fg3_attempts", "fg3_made"]],
             ["ft_pct", ["ft_attempts", "ft_made"]]]
-    #build the SQL query
+    # build the SQL query
     p1_query = "SELECT year, games_played, "
     col_cnt = 0
     for pair in cols:
@@ -169,17 +214,17 @@ def duel_result():
             for val in pair[1]:
                 p1_query += val + ", "
             col_cnt += 1
-    p1_query = p1_query[0 : len(p1_query) - 2]
+    p1_query = p1_query[0: len(p1_query) - 2]
     p1_query += " FROM Stats WHERE LOWER(name) == LOWER(\""
     p2_query = p1_query
     p1_query += p1 + "\")"
     p2_query += p2 + "\")"
-    #execute the SQL query
+    # execute the SQL query
     cur = con.cursor()
     p1_res = cur.execute(p1_query).fetchall()
     cur = con.cursor()
     p2_res = cur.execute(p2_query).fetchall()
-    #check that the query was valid
+    # check that the query was valid
     if (len(p1_res) == 0):
         return jsonify({"OK": False, "message": "Player 1 is not a (former) NBA player."})
     if (len(p2_res) == 0):
@@ -187,7 +232,7 @@ def duel_result():
     if (col_cnt == 0):
         return jsonify({"OK": False, "message": "Please select a non-empty set of stats."})
     if (season == "career"):
-        #process the result of the query
+        # process the result of the query
         num1 = [0 for i in range(col_cnt)]
         num2 = [0 for i in range(col_cnt)]
         denom1 = [0 for i in range(col_cnt)]
@@ -237,16 +282,16 @@ def duel_result():
             else:
                 num2[i] = divide(num2[i], tot_games2)
             num2[i] = round(num2[i], 1)
-        #return the processed result
+        # return the processed result
         return jsonify({"OK": True, "stats1": num1, "stats2": num2})
-    else: #season == "rookie" or season == "custom"
+    else:  # season == "rookie" or season == "custom"
         if (season == "rookie"):
             season1 = min(p1_res)[0]
             season2 = min(p2_res)[0]
         else:
             season1 = int(data["season1"])
             season2 = int(data["season2"])
-        #process the result of the query
+        # process the result of the query
         stats1 = []
         stats2 = []
         for tup in p1_res:
@@ -261,7 +306,8 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats1.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats1.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats1.append(
+                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
         for tup in p2_res:
             if tup[0] != season2:
@@ -275,19 +321,22 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats2.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats2.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats2.append(
+                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
-        #check that the query was valid
+        # check that the query was valid
         if (stats1 == []):
             return jsonify({"OK": False, "message": ("Player 1 did not play in the " + str(season1 - 1) + "-" + str(season1) + " season.")})
         if (stats2 == []):
             return jsonify({"OK": False, "message": ("Player 2 did not play in the " + str(season2 - 1) + "-" + str(season2) + " season.")})
-        #return the processed result
+        # return the processed result
         return jsonify({"OK": True, "stats1": stats1, "stats2": stats2})
+
 
 @app.route('/duel')
 def duel():
     return render_template("duel.html")
+
 
 def toint(x):
     try:
@@ -295,19 +344,21 @@ def toint(x):
     except:
         return None
 
+
 def tofloat(x):
     try:
         return float(x)
     except:
         return None
 
+
 @app.route('/predict-player-result', methods=["POST"])
 def hypo_player_result():
-    #input from html form
+    # input from html form
     data = json.loads(request.data)
-    #sqlite3
+    # sqlite3
     con = sqlite3.connect("instance/users.db")
-    #map corresponding to columns in the database
+    # map corresponding to columns in the database
     cols = [["gp", ["games_played"]],
             ["pts", ["points"]],
             ["reb", ["rebounds"]],
@@ -315,7 +366,7 @@ def hypo_player_result():
             ["fg_pct", ["fg_attempts", "fg_made"]],
             ["fg3_pct", ["fg3_attempts", "fg3_made"]],
             ["ft_pct", ["ft_attempts", "ft_made"]]]
-    #check that the query is valid
+    # check that the query is valid
     data["gp"] = toint(data["gp"])
     if (data["gp"] is None or 1 > data["gp"] or data["gp"] > 82):
         return jsonify({"OK": False, "message": "Please enter an INTEGER in the RANGE [1, 82] for Games Played."})
@@ -326,7 +377,7 @@ def hypo_player_result():
     for pair in cols[1:]:
         if (pair[0].find("pct") != -1 and data[pair[0]] > 100):
             return jsonify({"OK": False, "message": "Please check that all entered percentages are LESS THAN OR EQUAL to 100."})
-    #query the SQL database
+    # query the SQL database
     cur = con.cursor()
     cur.execute("DROP VIEW IF EXISTS RookieSeasons")
     cur = con.cursor()
@@ -334,10 +385,12 @@ def hypo_player_result():
     cur = con.cursor()
     cur.execute("DROP VIEW IF EXISTS TargetPlayers")
     cur = con.cursor()
-    cur.execute("CREATE VIEW TargetPlayers AS SELECT name FROM RookieSeasons WHERE games_played==" + str(data["gp"]))
+    cur.execute(
+        "CREATE VIEW TargetPlayers AS SELECT name FROM RookieSeasons WHERE games_played==" + str(data["gp"]))
     cur = con.cursor()
-    res = cur.execute("SELECT * FROM TargetPlayers NATURAL JOIN Stats").fetchall()
-    #process the results of query
+    res = cur.execute(
+        "SELECT * FROM TargetPlayers NATURAL JOIN Stats").fetchall()
+    # process the results of query
     accum_stats = []
     num_players = []
     name_to_season = {}
@@ -355,9 +408,11 @@ def hypo_player_result():
             if (cols[j][0] == "gp"):
                 accum_stats[name_to_season[tup[0]] - 1][j] += tup[k]
             elif (len(cols[j][1]) == 1):
-                accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k], tup[2])
+                accum_stats[name_to_season[tup[0]] -
+                            1][j] += divide(tup[k], tup[2])
             else:
-                accum_stats[name_to_season[tup[0]] - 1][j] += divide(tup[k + 1], tup[k])
+                accum_stats[name_to_season[tup[0]] -
+                            1][j] += divide(tup[k + 1], tup[k])
             k += len(cols[j][1])
             j += 1
         num_players[name_to_season[tup[0]] - 1] += 1
@@ -374,7 +429,8 @@ def hypo_player_result():
             break
         predicted_stats.append([])
         for j in range(len(cols)):
-            predicted_stats[i].append(divide(data[cols[j][0]],avg_stats[0][j])*avg_stats[i][j])
+            predicted_stats[i].append(
+                divide(data[cols[j][0]], avg_stats[0][j])*avg_stats[i][j])
             if (cols[j][0] == "GP"):
                 predicted_stats[i][j] = round(predicted_stats[i][j])
                 predicted_stats[i][j] = max(predicted_stats[i][j], 1)
@@ -385,7 +441,7 @@ def hypo_player_result():
                 predicted_stats[i][j] = round(predicted_stats[i][j], 1)
                 predicted_stats[i][j] = min(predicted_stats[i][j], 100)
     return jsonify({"OK": True, "stats": predicted_stats})
-    
+
 
 @app.route('/predict-player')
 def hypo_player():

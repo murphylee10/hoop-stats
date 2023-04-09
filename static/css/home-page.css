@@ -9,82 +9,156 @@ body {
   margin: 0;
 }
 
+body {
+  background: linear-gradient(270deg, #ea4343, #fbcb69);
+  background-size: 400% 400%;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.sub-heading {
+  margin-top: 2em;
+  margin-bottom: 1.5em;
+}
+
+.container h1 {
+  margin-top: 1em;
+  font-size: 4em;
+}
+
+/* carousel */
+#carouselExampleIndicators {
+  width: 60%;
+  height: 40%;
+  margin: auto;
+  display: block;
+}
+
+.carousel-inner img {
+  height: 95%;
+}
+
+.carousel-inner h2 {
+  font-size: 2.5em;
+}
+.carousel-inner p {
+  font-size: 1.8em;
+}
+
+.footer {
+  margin-top: 3em;
+}
+
 .container {
   width: 80%;
   margin: auto;
   overflow: hidden;
 }
 
-/* Navigation Bar*/
-header a {
-  color: #ffffff;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 16px;
-}
-
-.nav-bar {
+.button-div {
+  margin-top: 3em;
   width: 100%;
-  height: 50px;
-  background: #35424a;
+  display: flex;
+  justify-content: center;
 }
 
-.navbar1 {
-  float: left;
-  margin-left: 10px;
-  margin-top: 10px;
-  text-align: left;
-  height: auto;
-}
-
-.highlight {
-  color: #ff9933;
-  font-weight: bold;
-}
-
-.highlight1 {
-  color: #cce6ff;
-  font-weight: bold;
-}
-
-.highlight2 {
-  color: #ffffff;
-}
-
-header ul {
-  list-style: none;
-  /*set the width and margin: 0 auto;
-      so that it lies at the center of the navbar.*/
-  width: 1500px;
-  margin: 0 auto;
-}
-
-header ul li {
-  color: #fff;
-  float: left;
-  width: 175px;
-  /*set the li items to vertically center. */
-  line-height: 50px;
+.btn {
+  background: #9aaab3;
+  width: 20%;
+  margin: auto;
+  padding: 1.5em;
+  font-size: 1em;
+  display: block;
+  border-radius: 2px;
   text-align: center;
-  font-weight: 900;
-  cursor: pointer;
   text-transform: uppercase;
-  font-family: arial;
-  transition: 0.5s;
-  position: relative;
-  padding: 0px 10px 0 10px;
+  color: #fff;
+  letter-spacing: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.current {
-  color: #ff9933;
-  font-weight: bold;
+.btn:hover {
+  background-color: #ff7033;
+  box-shadow: 5px 10px #888888;
 }
 
-header ul li:hover:not(.active) {
-  background: #d80b15;
-}
 #question {
   transform: translateX(-4px);
+}
+
+@media screen and (max-width: 800px) {
+  /* carousel */
+  #carouselExampleIndicators {
+    width: 80%;
+    height: 60%;
+    margin: auto;
+    display: block;
+  }
+  .carousel-inner h2 {
+    /* display: block !important; */
+    font-size: 1.5em;
+  }
+  .carousel-inner p {
+    /* display: block !important; */
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  /* carousel */
+  #carouselExampleIndicators {
+    width: 80%;
+    height: 60%;
+    margin: auto;
+    display: block;
+  }
+  .carousel-inner h2 {
+    /* display: block !important; */
+    font-size: 1em;
+  }
+  .carousel-inner p {
+    /* display: block !important; */
+    font-size: 0.6em;
+  }
 }
 
 /* SLIDESHOW STYLYING */
@@ -207,70 +281,3 @@ img .slideshow-container {
 /*Slideshow section FINISHED*/
 
 /**/
-
-/* footer  */
-.footer {
-  /* spacing */
-  padding: 20px;
-  padding-top: 1.4em;
-  padding-bottom: 2.5em;
-  margin-top: 0px;
-  margin-bottom: 0px;
-
-  /* aesthetic */
-  background-color: #5b87a8;
-
-  /* alignment */
-  text-align: center;
-  line-height: 20px;
-
-  /* sizing */
-  height: 9em;
-  clear: both;
-}
-
-/* footer styling */
-.footer ul {
-  /* font */
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-  text-align: center;
-  font-size: 1.1em;
-
-  /* aesthetic */
-  list-style-type: none;
-  color: rgb(0, 0, 0);
-}
-
-/* footer */
-.footer p {
-  font-size: large;
-  font-style: italic, bold;
-}
-
-/* footer  */
-footer ul li::before {
-  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: rgba(46, 52, 103, 0.767); /* Change the color */
-  font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width: 1em; /* Also needed for space (tweak if needed) */
-}
-
-/* footer title */
-.footer-title {
-  font-style: oblique;
-  font-family: "Courier New", Courier, monospace;
-  text-decoration: underline;
-}
-
-/* MEDIA QUERIES (responsiveness)*/
-@media only screen and (max-width: 600px) {
-  .footer {
-    margin-left: 0;
-  }
-
-  .footer h1 {
-    line-height: 1em;
-  }
-}

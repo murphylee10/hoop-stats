@@ -10,9 +10,17 @@
   font-family: "Kavivanar", cursive;
 }
 
+.container {
+  width: 100%;
+}
+
+#login {
+  width: 100%;
+}
+
 .wrapper {
   width: 100%;
-  max-width: 50%;
+  max-width: 80%;
   margin: 4em auto;
   padding: 20px;
   box-sizing: border-box;
@@ -33,6 +41,7 @@
 }
 
 .form input[type="text"],
+.form input[type="password"],
 .form textarea {
   padding: 15px 5px;
   box-sizing: border-box;
@@ -65,10 +74,37 @@
   justify-content: center;
 }
 
+.container {
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content h1 {
+  font-size: 3em;
+  margin-top: 0.3em;
+  margin-bottom: 0.7em;
+}
+
+.content p {
+  font-size: 1.5em;
+}
+
+.form p {
+  font-size: 1.3em;
+}
+
+.form input {
+  height: 4.5em;
+  font-size: 1.2em;
+}
+
 .btn {
   background: #ff9933;
   margin: auto;
-  padding: 0.8em;
+  padding: 1.5em;
+  font-size: 1em;
   width: 20%;
   display: inline-block;
   border-radius: 2px;
@@ -80,6 +116,34 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.btn:hover {
+  background-color: #ff7033;
+  box-shadow: 5px 10px #888888;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .wrapper {
+    max-width: 100%;
+  }
+  .footer {
+    position: relative;
+  }
+  .container {
+    height: unset;
+  }
+  .btn {
+    width: 60%;
+  }
 }
 
 .register-link {
