@@ -335,6 +335,9 @@ def duel_result():
 
 @app.route('/duel')
 def duel():
+    if ("user" not in session):
+        flash("Log in before viewing this page", category="error")
+        return redirect(url_for('login'))
     return render_template("duel.html")
 
 
@@ -445,6 +448,9 @@ def hypo_player_result():
 
 @app.route('/predict-player')
 def hypo_player():
+    if ("user" not in session):
+        flash("Log in before viewing this page", category="error")
+        return redirect(url_for('login'))
     return render_template("predict-player.html")
 
 
