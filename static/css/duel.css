@@ -31,3 +31,104 @@
   flex-direction: column;
   align-items: center;
 }
+
+.player-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+
+.stats {
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.stat-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.season {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+}
+
+#duel {
+  background: rgba(159, 199, 199, 0.4);
+  width: 20%;
+  height: 5%;
+  margin: auto;
+  margin-bottom: 2em;
+  padding: 0.7em;
+  font-size: 1em;
+  display: block;
+  border-radius: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#duel:hover {
+  transform: scale(1.2);
+  background-color: #91d0cd;
+  box-shadow: 5px 10px #888888;
+}
+
+#season {
+  padding: 0.5em;
+}
+
+#season:hover {
+  cursor: pointer;
+  background-color: rgb(162, 223, 213);
+}
+
+.stat:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+  background-color: rgba(88, 114, 114, 0.2);
+  box-shadow: 2px 2px rgba(214, 238, 238, 0.2);
+}
+
+.stat label:hover {
+  cursor: pointer;
+}
+
+/* responsiveness */
+@media screen and (max-width: 700px) {
+  .container h1 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+  .player-input {
+    flex-direction: column;
+  }
+  .swords {
+    order: 0;
+  }
+  #p1-div {
+    order: 1;
+  }
+  #p2-div {
+    order: 2;
+  }
+  .player-name input {
+    margin-bottom: 1.5em;
+  }
+
+  .stats {
+    flex-direction: column;
+  }
+  #duel {
+    width: 50%;
+  }
+}

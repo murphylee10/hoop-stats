@@ -133,7 +133,9 @@ def login():
             # their username for this session
             session["user"] = username
             return redirect(url_for('profile', username=username))
-
+    if "user" in session:
+        flash("You are already logged in")
+        return redirect(url_for('profile', username=session['user']))
     return render_template("login.html")
 
 
@@ -307,7 +309,8 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats1.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats1.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats1.append(
+                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
             stats1.append(tup[-1])
         for tup in p2_res:
@@ -322,7 +325,8 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats2.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats2.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats2.append(
+                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
             stats2.append(tup[-1])
         # check that the query was valid

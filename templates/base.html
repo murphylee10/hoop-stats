@@ -84,39 +84,37 @@
 
             <div class="collapse navbar-collapse nav-bar bg-dark justify-content-endx" id="collapsibleNavbar">
                 <ul class="justify-content-end">
+                    <li class="nav-item">
+                        <a class="current" href="/"><i class="fa fa-fw fa-home"></i> <span>home</span></a>
+                    </li>
                     {% if "user" not in session %}
                     <li class="nav-item">
-                        <a class="current" href="/"><i class="fa fa-fw fa-home"></i> Home</a>
+                        <a href="/register"><i class="fa fa-fw fa-envelope"></i> <span>register</span></a>
                     </li>
                     {% endif %}
                     {% if "user" not in session %}
                     <li class="nav-item">
-                        <a href="/register"><i class="fa fa-fw fa-envelope"></i>Register</a>
-                    </li>
-                    {% endif %}
-                    {% if "user" not in session %}
-                    <li class="nav-item">
-                        <a href="/login"><i class="fa fa-fw fa-user"></i>login</a>
+                        <a href="/login"><i class="fa fa-fw fa-user"></i> <span>login</span></a>
                     </li>
                     {% endif %}
                     {% if "user" in session %}
                     <li class="nav-item">
-                        <a href="/profile"><i class="fa-solid fa-circle-user"></i> profile</a>
+                        <a href="/profile"><i class="fa-solid fa-circle-user"></i> <span>profile</span></a>
                     </li>
                     {% endif %}
                     {% if "user" in session %}
                     <li class="nav-item">
-                        <a href="/duel"><i class="fa-solid fa-shield-halved"></i> Duel</a>
+                        <a href="/duel"><i class="fa-solid fa-shield-halved"></i> <span>duel</span></a>
                     </li>
                     {% endif %}
                     {% if "user" in session %}
                     <li class="nav-item">
-                        <a href="/predict-player"><i class="fa-sharp fa-regular fa-book"></i></i> Predict </a>
+                        <a href="/predict-player"><i class="fa-sharp fa-regular fa-book"></i></i> <span>predict</span> </a>
                     </li>
                     {% endif %}
                     {% if "user" in session %}
                     <li class="nav-item">
-                        <a href="/logout"><i class="fa fa-fw fa-user"></i>logout</a>
+                        <a href="/logout"><i class="fa fa-fw fa-user"></i><span>logout</span></a>
                     </li>
                     {% endif %}
                 </ul>

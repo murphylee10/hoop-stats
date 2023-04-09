@@ -3,6 +3,8 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='css/predict-player.css') }}"
 />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 {% endblock %} {% block title %}SwishStats{% endblock %} {% block content %}
 <div id="input">
   <div class="header">
@@ -41,9 +43,14 @@
 
   <input type="submit" value="Build Player!" name="build" id="build" />
 
-  <script src="../static/js/season-dropdown.js"></script>
-  <script src="../static/js/predict-player.js"></script>
 </div>
 
-<div id="output"></div>
+<div class="surround">
+    <div class="pred-header">
+    </div>
+    <div id="output">
+    </div>
+</div>
+<script src="../static/js/season-dropdown.js"></script>
+<script src="../static/js/predict-player.js"></script>
 {% endblock %}

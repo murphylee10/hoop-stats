@@ -28,6 +28,17 @@ function displayPrediction() {
   }
   generatePrediction(dict).then((response) => {
     let output = document.querySelector("#output");
+
+    // reset header
+    let rem_header = document.querySelector('#pred-header h2');
+    if (rem_header != null) {
+      rem_header.remove()
+    }
+    let pred_header_div = document.querySelector('.pred-header')
+    let new_header = document.createElement('h2')
+    new_header.innerText = "Predicted Player Stats"
+    pred_header_div.appendChild(new_header)
+
     let pre_message = document.querySelector("p.message");
     let pre_table = document.querySelector("table");
     if (pre_table !== null) {
@@ -78,41 +89,43 @@ function displayPrediction() {
       table.append(row);
     }
     output.append(table);
+
+    // output = document.getElementById("output");
+
+    // const header = document.createElement("h2");
+    // header.textContent = "Predicted Season Stats";
+    // output.appendChild(header);
+
+    // table = document.createElement("table");
+    // output.appendChild(table);
+
+    // const headerRow = document.createElement("tr");
+    // table.appendChild(headerRow);
+
+    // [
+    //   "Name",
+    //   "Position",
+    //   "Points",
+    //   "Rebounds",
+    //   "Assists",
+    //   "Blocks",
+    //   "Steals",
+    // ].forEach((header) => {
+    //   const th = document.createElement("th");
+    //   th.textContent = header;
+    //   headerRow.appendChild(th);
+    // });
+
+    // data.forEach((player) => {
+    //   const row = document.createElement("tr");
+    //   table.appendChild(row);
+    //   Object.values(player).forEach((value) => {
+    //     const td = document.createElement("td");
+    //     td.textContent = value;
+    //     row.appendChild(td);
+    //   });
+    // });
   });
 }
 
-const output = document.getElementById("output");
 
-const header = document.createElement("h2");
-header.textContent = "Predicted Season Stats";
-output.appendChild(header);
-
-const table = document.createElement("table");
-output.appendChild(table);
-
-const headerRow = document.createElement("tr");
-table.appendChild(headerRow);
-
-[
-  "Name",
-  "Position",
-  "Points",
-  "Rebounds",
-  "Assists",
-  "Blocks",
-  "Steals",
-].forEach((header) => {
-  const th = document.createElement("th");
-  th.textContent = header;
-  headerRow.appendChild(th);
-});
-
-data.forEach((player) => {
-  const row = document.createElement("tr");
-  table.appendChild(row);
-  Object.values(player).forEach((value) => {
-    const td = document.createElement("td");
-    td.textContent = value;
-    row.appendChild(td);
-  });
-});

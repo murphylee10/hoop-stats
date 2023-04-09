@@ -53,8 +53,17 @@
   background-color: #0062cc;
 }
 
+.surround {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #output {
-  display: block;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  /* align-items: center; */
   width: 80%;
   margin: auto;
   font-size: 18px;
@@ -85,4 +94,13 @@
 
 .header {
   text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  #output table {
+    transform: scale(0.5);
+    margin: auto;
+    margin-top: 1em;
+    padding-top: 0;
+  }
 }

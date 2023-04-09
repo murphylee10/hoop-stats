@@ -78,6 +78,18 @@ body {
     width: 30%;
     height: 30%;
   }
+  .nav-item {
+    width: 10%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .nav-item {
+    width: 5%;
+  }
+  .nav-item span {
+    display: none;
+  }
 }
 
 /* Navigation Bar*/
