@@ -107,21 +107,23 @@ function displayDuel() {
     let row2 = document.createElement("tr");
     row1.append(stats1[stats1.length - 1]);
     row2.append(stats2[stats2.length - 1]);
-    for (let i = 0; i < cols.length; ++i) {
+    for (let i = 0, j = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
       let cell = document.createElement("td");
-      cell.append(stats1[i]);
+      cell.append(stats1[j]);
       row1.append(cell);
+      ++j;
     }
-    for (let i = 0; i < cols.length; ++i) {
+    for (let i = 0, j = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
       let cell = document.createElement("td");
-      cell.append(stats2[i]);
+      cell.append(stats2[j]);
       row2.append(cell);
+      ++j;
     }
     table.append(row1);
     table.append(row2);
