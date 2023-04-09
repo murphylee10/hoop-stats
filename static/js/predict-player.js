@@ -3,21 +3,21 @@ let buildButton = document.querySelector("#build");
 buildButton.addEventListener("click", displayPrediction);
 
 function generatePrediction(dict) {
-    return new Promise((resolve, reject) => {
-      fetch("/predict-player-result", {
-        method: "POST",
-        body: JSON.stringify(dict),
+  return new Promise((resolve, reject) => {
+    fetch("/predict-player-result", {
+      method: "POST",
+      body: JSON.stringify(dict),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        resolve(data);
       })
-        .then((response) => response.json())
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error.message);
-        });
-    });
-  }
-  
+      .catch((error) => {
+        reject(error.message);
+      });
+  });
+}
+
 function displayPrediction() {
   let dict = {};
   dict["p_name"] = document.querySelector("#p_name").value;
@@ -64,7 +64,11 @@ function displayPrediction() {
     for (let i = 0; i < stats.length; ++i) {
       let row = document.createElement("tr");
       let season_cell = document.createElement("td");
-      season_cell.append(String(Number(dict["season"]) + i - 1) + "-" + String(Number(dict["season"]) + i))
+      season_cell.append(
+        String(Number(dict["season"]) + i - 1) +
+          "-" +
+          String(Number(dict["season"]) + i)
+      );
       row.append(season_cell);
       for (let j = 0; j < stats[i].length; ++j) {
         let cell = document.createElement("td");
@@ -76,3 +80,44 @@ function displayPrediction() {
     output.append(table);
   });
 }
+
+const output = document.getElementById("output");
+
+// add header
+const header = document.createElement("h2");
+header.textContent = "Predicted Season Stats";
+output.appendChild(header);
+
+// create table
+const table = document.createElement("table");
+output.appendChild(table);
+
+// create header row
+const headerRow = document.createElement("tr");
+table.appendChild(headerRow);
+
+// add headers
+[
+  "Name",
+  "Position",
+  "Points",
+  "Rebounds",
+  "Assists",
+  "Blocks",
+  "Steals",
+].forEach((header) => {
+  const th = document.createElement("th");
+  th.textContent = header;
+  headerRow.appendChild(th);
+});
+
+// add data rows
+data.forEach((player) => {
+  const row = document.createElement("tr");
+  table.appendChild(row);
+  Object.values(player).forEach((value) => {
+    const td = document.createElement("td");
+    td.textContent = value;
+    row.appendChild(td);
+  });
+});
