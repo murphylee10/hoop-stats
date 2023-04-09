@@ -86,6 +86,9 @@ function displayDuel() {
     console.log(String(stats2));
     let table = document.createElement("table");
     let headers = document.createElement("tr");
+    let name_header = document.createElement("th");
+    name_header.append("Player");
+    headers.append(name_header);
     for (let i = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
@@ -102,23 +105,23 @@ function displayDuel() {
     table.append(headers);
     let row1 = document.createElement("tr");
     let row2 = document.createElement("tr");
-    for (let i = 0, j = 0; i < cols.length; ++i) {
+    row1.append(stats1[cols.length]);
+    row2.append(stats2[cols.length]);
+    for (let i = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
       let cell = document.createElement("td");
-      cell.append(stats1[j]);
+      cell.append(stats1[i]);
       row1.append(cell);
-      ++j;
     }
-    for (let i = 0, j = 0; i < cols.length; ++i) {
+    for (let i = 0; i < cols.length; ++i) {
       if (!dict[cols[i]]) {
         continue;
       }
       let cell = document.createElement("td");
-      cell.append(stats2[j]);
+      cell.append(stats2[i]);
       row2.append(cell);
-      ++j;
     }
     table.append(row1);
     table.append(row2);

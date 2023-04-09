@@ -214,8 +214,7 @@ def duel_result():
             for val in pair[1]:
                 p1_query += val + ", "
             col_cnt += 1
-    p1_query = p1_query[0: len(p1_query) - 2]
-    p1_query += " FROM Stats WHERE LOWER(name) == LOWER(\""
+    p1_query += "name FROM Stats WHERE LOWER(name) == LOWER(\""
     p2_query = p1_query
     p1_query += p1 + "\")"
     p2_query += p2 + "\")"
@@ -282,6 +281,8 @@ def duel_result():
             else:
                 num2[i] = divide(num2[i], tot_games2)
             num2[i] = round(num2[i], 1)
+        num1.append(p1_res[0][-1])
+        num2.append(p2_res[0][-1])
         # return the processed result
         return jsonify({"OK": True, "stats1": num1, "stats2": num2})
     else:  # season == "rookie" or season == "custom"
@@ -306,9 +307,9 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats1.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats1.append(
-                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats1.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
+            stats1.append(tup[-1])
         for tup in p2_res:
             if tup[0] != season2:
                 continue
@@ -321,9 +322,9 @@ def duel_result():
                 elif (len(pair[1]) == 1):
                     stats2.append(round(divide(tup[tup_col], tup[1]), 1))
                 else:
-                    stats2.append(
-                        round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
+                    stats2.append(round(100*divide(tup[tup_col + 1], tup[tup_col]), 1))
                 tup_col += len(pair[1])
+            stats2.append(tup[-1])
         # check that the query was valid
         if (stats1 == []):
             return jsonify({"OK": False, "message": ("Player 1 did not play in the " + str(season1 - 1) + "-" + str(season1) + " season.")})
@@ -443,6 +444,7 @@ def hypo_player_result():
             else:
                 predicted_stats[i][j] = round(predicted_stats[i][j], 1)
                 predicted_stats[i][j] = min(predicted_stats[i][j], 100)
+    # return the processed result
     return jsonify({"OK": True, "stats": predicted_stats})
 
 
